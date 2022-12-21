@@ -6,6 +6,7 @@ authors = ["Régis Graptin <regis-graptin@sfr.fr>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+pylint = "^2.15.9"
 
 [tool.poetry.dev-dependencies]
 

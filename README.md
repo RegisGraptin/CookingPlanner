@@ -15,6 +15,11 @@ poetry run pytest
 
 poetry shell
 
+## Linter
+
+```shell
+poetry run pylint ./cookingplanner
+```
 
 ## TODO: 
 
