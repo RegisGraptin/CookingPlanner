@@ -1,10 +1,10 @@
 from datetime import date
 
-from cookingplanner.generator.dishGenerator import DishWeeklyGenerator
+from cookingplanner.generator.dish_generator import DishWeeklyGenerator
 from cookingplanner.recipe.recipe_storage import RecipeStorage
 from cookingplanner.scraping.scrapingurl import ScrapingURL
 from cookingplanner.scraping.scrapingrecipe import ScrapingRecipe
-from cookingplanner.generator.week import WeekGenerator, RegularWeekGenerator
+from cookingplanner.generator.week_generator import WeekGenerator, RegularWeekGenerator
 
 SHOW_DATA = True
 

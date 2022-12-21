@@ -16,7 +16,7 @@ class RecipeStepSerializer(serpy.Serializer):
 
 class Recipe(serpy.Serializer):
     
-    def __init__(self, recipe_data: dict):
+    def __init__(self, recipe_data: dict, source: str = ""):
         self.name        = recipe_data.get("name", None)
         self.duration    = recipe_data.get("duration", None)
         self.prepTime    = recipe_data.get("prepTime", None)
@@ -28,4 +28,5 @@ class Recipe(serpy.Serializer):
         self.recipeInstructions = [RecipeStep(step) for step in recipe_data.get("recipeInstructions", [])]
         self.recipeCuisine      = recipe_data.get("recipeCuisine", None)
         
+        self.source = source
     

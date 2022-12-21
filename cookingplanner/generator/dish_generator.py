@@ -4,7 +4,7 @@ import random
 from typing import List , Tuple
 
 from cookingplanner.recipe.recipe_storage import RecipeStorage
-from cookingplanner.generator.week import Week
+from cookingplanner.generator.week_generator import Week
 
 class UniqueRecipeStrategy:
     
