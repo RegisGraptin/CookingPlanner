@@ -21,6 +21,13 @@ poetry shell
 poetry run pylint ./cookingplanner
 ```
 
+Pre-commit
+
+```shell
+poetry run pre-commit run --all-files
+```
+
+
 ## TODO: 
 
 - Change the import name to the root of this project (solve python path issue)
