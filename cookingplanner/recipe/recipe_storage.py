@@ -1,11 +1,10 @@
 import os
 import json
 import random
-import serpy
 
 from cookingplanner.utils.singleton import SingletonMeta
 
-class RecipeStorage(metaclass=SingletonMeta): # serpy.Serializer,
+class RecipeStorage(metaclass=SingletonMeta):
     
     CONFIG_NAME   = "recipes.json"
     CONFIG_FOLDER = "./"
