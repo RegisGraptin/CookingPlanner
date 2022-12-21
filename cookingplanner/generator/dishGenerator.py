@@ -3,8 +3,8 @@ import random
 
 from typing import List , Tuple
 
-from dish.recipe.recipe_storage import RecipeStorage
-from dish.generator.week import Week
+from cookingplanner.recipe.recipe_storage import RecipeStorage
+from cookingplanner.generator.week import Week
 
 class UniqueRecipeStrategy:
     
@@ -31,8 +31,12 @@ class UniqueRecipeStrategy:
         # Choose a random recipe
         chosen_recipe, _ = random.choice(self.recipes)
         
+        print(len(self.recipes))
+        # print(self.recipes)
+        
         while chosen_recipe in self.recipes_seen:
             chosen_recipe, _ = random.choice(self.recipes)
+        
         
         # Add it to the list of seen
         self.recipes_seen.add(chosen_recipe)

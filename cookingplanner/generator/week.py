@@ -2,12 +2,12 @@
 import datetime
 from datetime import date
 
-from dish.recipe.recipe_storage import RecipeStorage
+from cookingplanner.recipe.recipe_storage import RecipeStorage
 
-from dish.generator.day import Moment
-from dish.generator.day import Dish
-from dish.generator.day import Day
-from dish.generator.day import Week
+from cookingplanner.generator.day import Moment
+from cookingplanner.generator.day import Dish
+from cookingplanner.generator.day import Day
+from cookingplanner.generator.day import Week
 
 class RecipeGenerator:
     pass

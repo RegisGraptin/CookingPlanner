@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 
-from dish.extractor.marmitonextractor import MarmitonExtractor
+from cookingplanner.extractor.marmitonextractor import MarmitonExtractor
 
 class ScrapingRecipe:
     

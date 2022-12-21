@@ -14,3 +14,13 @@ poetry run pytest
 ## Activate the environment
 
 poetry shell
+
+
+## TODO: 
+
+- Change the import name to the root of this project (solve python path issue)
+- Have a precise naming for each class. (Structuration of the project + diagram)
+- Write the readme description of this project (what for ? execution ?)
+
+
+- Think about the organisation of a web services (backend)

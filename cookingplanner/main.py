@@ -1,16 +1,16 @@
 from datetime import date
-from dish.generator.dishGenerator import DishWeeklyGenerator
 
-from dish.recipe.recipe_storage import RecipeStorage
-from dish.scraping.scrapingurl import ScrapingURL
-from dish.scraping.scrapingrecipe import ScrapingRecipe
-from dish.generator.week import WeekGenerator, RegularWeekGenerator
+from cookingplanner.generator.dishGenerator import DishWeeklyGenerator
+from cookingplanner.recipe.recipe_storage import RecipeStorage
+from cookingplanner.scraping.scrapingurl import ScrapingURL
+from cookingplanner.scraping.scrapingrecipe import ScrapingRecipe
+from cookingplanner.generator.week import WeekGenerator, RegularWeekGenerator
 
 SHOW_DATA = True
 
 def generate_data():
     
-    recipe_storage = RecipeStorage(config_path="../")
+    recipe_storage = RecipeStorage(config_path="./")
     
     # Get recipes url
     scrapingURL = ScrapingURL(n_pages=1)
@@ -27,7 +27,7 @@ def generate_data():
     print("Extract and saved all recipes")
 
 def show_url_recipe():
-    recipe_storage = RecipeStorage(config_path="../")
+    recipe_storage = RecipeStorage(config_path="./")
     recipes = recipe_storage.get()
     print("Number of recipes:", len(recipes))
     for recipe in recipes:
@@ -37,7 +37,7 @@ def show_url_recipe():
 def generate_a_week():
     
     # Initialize the recipe storage
-    RecipeStorage(config_path="../")
+    RecipeStorage(config_path="./")
     
     weekGenerator = RegularWeekGenerator()
     

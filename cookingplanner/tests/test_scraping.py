@@ -1,5 +1,5 @@
 
-from dish.scraping.scrapingurl import ScrapingURL
+from cookingplanner.scraping.scrapingurl import ScrapingURL
 
 
 def test_scraping_url():

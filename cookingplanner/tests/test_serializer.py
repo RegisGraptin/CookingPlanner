@@ -1,7 +1,7 @@
 
 import json
 
-from dish.recipe.recipe import RecipeStepSerializer, RecipeStep
+from cookingplanner.recipe.recipe import RecipeStepSerializer, RecipeStep
 
 
 def test_recipe_step_serializer():

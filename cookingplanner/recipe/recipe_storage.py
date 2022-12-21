@@ -3,7 +3,7 @@ import json
 import random
 import serpy
 
-from dish.utils.singleton import SingletonMeta
+from cookingplanner.utils.singleton import SingletonMeta
 
 class RecipeStorage(metaclass=SingletonMeta): # serpy.Serializer,
     
