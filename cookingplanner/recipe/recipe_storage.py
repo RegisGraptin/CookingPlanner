@@ -5,6 +5,14 @@ import random
 from cookingplanner.utils.singleton import SingletonMeta
 
 class RecipeStorage(metaclass=SingletonMeta):
+    """TODO
+
+    Args:
+        metaclass (_type_, optional): _description_. Defaults to SingletonMeta.
+
+    Returns:
+        _type_: _description_
+    """
     
     CONFIG_NAME   = "recipes.json"
     CONFIG_FOLDER = "./"
@@ -17,16 +25,21 @@ class RecipeStorage(metaclass=SingletonMeta):
         
         if os.path.exists(self.config_path):
             # Read the file
-            with open(self.config_path, 'r') as file:
+            with open(self.config_path, 'r', encoding="utf-8") as file:
                 self.data = json.load(file)
     
     def save(self):
         """Save the data"""
-        with open(self.config_path, 'w') as file:
+        with open(self.config_path, 'w', encoding="utf-8") as file:
             json.dump(self.data, file)
                 
     
     def get_random(self):
+        """TODO
+
+        Returns:
+            _type_: _description_
+        """
         return random.choice(self.data['recipes'])
     
     def add(self, url: str, recipe: dict):
@@ -37,7 +50,7 @@ class RecipeStorage(metaclass=SingletonMeta):
             recipe (_type_): _description_
         """
         
-        # TODO :: Check if recipe exists or not
+        # TODO: Verify if recipe exists or not
         
         urls = [u[0] for u in self.data['recipes']]
         if url in urls: 
@@ -49,5 +62,10 @@ class RecipeStorage(metaclass=SingletonMeta):
         self.save()
         
     def get(self):
+        """TODO
+
+        Returns:
+            _type_: _description_
+        """
         return self.data.get('recipes', [])
     
