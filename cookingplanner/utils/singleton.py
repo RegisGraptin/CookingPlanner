@@ -1,5 +1,5 @@
-from threading import Lock
 
+from threading import Lock
 
 class SingletonMeta(type):
     """

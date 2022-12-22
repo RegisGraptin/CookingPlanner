@@ -2,7 +2,7 @@ from datetime import date
 
 from cookingplanner.generator.dish_generator import DishWeeklyGenerator
 from cookingplanner.recipe.recipe_storage import RecipeStorage
-from cookingplanner.scraping.scrapingurl import ScrapingURL
+from cookingplanner.scraping.scraping_url import ScrapingURL
 from cookingplanner.scraping.scrapingrecipe import ScrapingRecipe
 from cookingplanner.generator.week_generator import WeekGenerator, RegularWeekGenerator
 

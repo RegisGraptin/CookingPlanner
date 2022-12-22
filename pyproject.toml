@@ -8,6 +8,8 @@ authors = ["Régis Graptin <regis-graptin@sfr.fr>"]
 python = "^3.8"
 pylint = "^2.15.9"
 pre-commit = "^2.20.0"
+bs4 = "^0.0.1"
+requests = "^2.28.1"
 
 [tool.poetry.dev-dependencies]
 

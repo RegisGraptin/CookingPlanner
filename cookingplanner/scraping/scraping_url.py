@@ -1,5 +1,6 @@
 
 import requests
+
 from bs4 import BeautifulSoup
 from typing import List
 
@@ -13,7 +14,7 @@ class URLExtractor:
         
     def __init__(self, content: BeautifulSoup) -> None:
         self.content = content
-        self.data = {}    
+        self.data = {}
         self.extract()
 
 
@@ -22,12 +23,12 @@ class ScrapingURL:
     URL = [
         "https://www.marmiton.org/recettes/index/categorie/plat-principal/"
     ]
-    
+
     def __init__(self, n_pages: int = 1) -> None:
         self.n_pages = n_pages
-    
+
     def scrap(self) -> List[str]:
-        
+
         urls = []
         
         for i in range(1, self.n_pages + 1):
@@ -46,9 +47,3 @@ class ScrapingURL:
                 urls += url_extractor.data.get('urls', [])
                 
         return urls
-                
-                
-if __name__ == "__main__":
-    s = ScrapingURL(n_pages=1)
-    l = s.scrap()
-    
