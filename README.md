@@ -39,3 +39,9 @@ poetry run pre-commit run --all-files
 
 
 - Think about the organisation of a web services (backend)
+
+
+
+## TODO :
+
+- `scraping_url`: Have a better organization on the generation of new urls. (Pending)

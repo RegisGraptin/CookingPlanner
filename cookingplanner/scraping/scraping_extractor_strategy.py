@@ -76,7 +76,7 @@ class MarmitonExtractorStrategy(ExtractorStrategyInterface):
         """
         self._extract_total_time_duration()
         self._extract_recipe()
-        return Recipe(self.data)
+        return Recipe(self.data, self.source_url)
     
     def extract_recipe_urls(self) -> List[str]:
         """Extract the recipe urls present on the page.
@@ -94,8 +94,9 @@ class MarmitonExtractorStrategy(ExtractorStrategyInterface):
         
         return urls
     
-    def __init__(self, content: BeautifulSoup) -> None:
+    def __init__(self, content: BeautifulSoup, source_url: str) -> None:
         self.content = content
+        self.source_url = source_url
         self.data = {}
 
 class ManagerExtractorStrategy(metaclass=SingletonMeta):

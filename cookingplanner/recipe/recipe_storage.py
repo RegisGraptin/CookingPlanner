@@ -5,13 +5,15 @@ import random
 from cookingplanner.utils.singleton import SingletonMeta
 
 class RecipeStorage(metaclass=SingletonMeta):
-    """TODO
-
+    """RecipeStorage class.
+    
+    Store all the recipe extracted online.
+    The current architecture store the recipe in a list format.
+    Each element is defined as a tuple. The first element is the source url
+    where we extract the recipe. The second element is the Recipe.
+    
     Args:
-        metaclass (_type_, optional): _description_. Defaults to SingletonMeta.
-
-    Returns:
-        _type_: _description_
+        metaclass (SingletonMeta, optional): Singleton class. Defaults to SingletonMeta.
     """
     
     CONFIG_NAME   = "recipes.json"
@@ -68,4 +70,15 @@ class RecipeStorage(metaclass=SingletonMeta):
             _type_: _description_
         """
         return self.data.get('recipes', [])
+    
+    def exists(self, url: str) -> bool:
+        """Indicate if the given url already exists.
+
+        Args:
+            url (str): Url we want to check
+
+        Returns:
+            bool: True if the url is already presents.
+        """
+        return any(url == tup[0] for tup in self.get())
     

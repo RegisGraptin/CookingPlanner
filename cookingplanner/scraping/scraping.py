@@ -5,26 +5,29 @@ from cookingplanner.scraping.scraping_recipe import ScrapingRecipe
 from cookingplanner.scraping.scraping_url import ScrapingURL
 
 
-class ScrapingData():
-    """TODO"""
+class Scraping():
+    """Scraping class.
     
-
-def generate_data():
-    """TODO
+    Extract new data by scraping website.
     """
-
-    recipe_storage = RecipeStorage(config_path="./")
-
-    # Get recipes url
-    scraping_url = ScrapingURL(n_pages=1)
-    recipe_urls = scraping_url.scrap()
-
-    print(f"Load {len(recipe_urls)} recipes")
-
-    scraping_recipe = ScrapingRecipe()
-    for recipe_url in recipe_urls:
-        # Extract and add the recipe
-        recipe = scraping_recipe.scrap(recipe_url)
-        recipe_storage.add(recipe_url, recipe)
-
-    print("Extract and saved all recipes")
+    
+    def __init__(self) -> None:
+        # Define our recipe storage
+        self.recipe_storage = RecipeStorage()
+        
+        # Define the Scraping methods
+        self.scraping_url    = ScrapingURL(n_pages=1)
+        self.scraping_recipe = ScrapingRecipe()
+    
+    def scrap(self):
+        """Scrap new data by generating new urls and extract the recipe from it."""
+        
+        # Target urls
+        target_urls = self.scraping_url.scrap()
+        
+        for target_url in target_urls:
+            
+            # Check if we do not have already extract the url
+            if not self.recipe_storage.exists(target_url):                
+                recipe = self.scraping_recipe.scrap(target_url)
+                self.recipe_storage.add(target_url, recipe)

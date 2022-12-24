@@ -65,6 +65,6 @@ class ScrapingURL:
                 content.prettify()
                 
                 # Extract the URL
-                urls += strategy(content).extract_recipe_urls()
+                urls += strategy(content, target_page_url).extract_recipe_urls()
         
         return urls

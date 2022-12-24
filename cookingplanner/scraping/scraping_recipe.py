@@ -41,4 +41,4 @@ class ScrapingRecipe:
         content.prettify()
 
         # Given the strategy, extract the recipe
-        return strategy(content).extract_recipe()
+        return strategy(content, url).extract_recipe()
