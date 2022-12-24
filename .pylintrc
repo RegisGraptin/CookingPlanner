@@ -421,7 +421,9 @@ disable=raw-checker-failed,
         C0114, 
         E0401, 
         W0511,
-        R0902
+        R0902,
+        C0301, # Remove too long line, because the str content can be very long 
+               # and contain some text difficult to cut easely
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

@@ -1,91 +1,48 @@
-import json
-from bs4 import BeautifulSoup
+from urllib.parse import urlparse
+
 import requests
+from bs4 import BeautifulSoup
 
-class MarmitonExtractor:
-    """TODO
-    """
+from cookingplanner.recipe.recipe import Recipe
+from cookingplanner.scraping.scraping_extractor_strategy import \
+    MarmitonExtractorStrategy
 
-    def _extract_total_time_duration(self):
-        """TODO
-        """
-        spans = self.content.find_all("span")
-        for span in spans:
-            if span.text.startswith("Temps total:"):
-                parent = span.parent
-                children = parent.findChildren()
-
-                self.data["duration"] = children[-1].text.replace(
-                    '\xa0', ' ')
-                return
-
-    def _extract_recipe(self):
-        """TODO
-        """
-
-        scripts = self.content.find_all("script")
-        for script in scripts:
-            if script.get('type') is not None:
-                if script.get('type') == "application/ld+json":
-                    content = json.loads(script.text)
-
-                    if content.get('@type') is not None:
-                        if content.get('@type') == "Recipe":
-                            # print(content)
-
-                            self.data['name']      = content['name']
-                            self.data['prepTime']  = content['prepTime']
-                            self.data['cookTime']  = content['cookTime']
-                            self.data['totalTime'] = content['totalTime']
-
-                            self.data['recipeYield'] = content['recipeYield']
-
-                            self.data['recipeIngredient'] = content['recipeIngredient']
-                            self.data['recipeInstructions'] = content['recipeInstructions']
-                            self.data['recipeCuisine'] = content['recipeCuisine']
-
-        # <script type="application/ld+json">
-
-    def __init__(self, content: BeautifulSoup) -> None:
-        self.content = content
-        self.data = {}
-
-        self.extract()
-
-    def extract(self):
-        """TODO
-        """
-        self._extract_total_time_duration()
-        self._extract_recipe()
-
-    def get_data(self):
-        """TODO
-
-        Returns:
-            _type_: _description_
-        """
-        return self.data
 
 class ScrapingRecipe:
-    """TODO
+    """Scraping a page with a recipe.
+    
+    Based on the given url, a specific strategy will be apply in order 
+    to extract correctly the information on it.
     """
 
     def __init__(self) -> None:
-        pass
+        """Initialize the strategies based on the domain name."""
+        
+        self.strategies = {
+            urlparse("https://www.marmiton.org").hostname: MarmitonExtractorStrategy
+        }
 
-    def scrap(self, url) -> dict:
-        """TODO
+    def scrap(self, url: str) -> Recipe:
+        """Given a url, extract the recipe from it.
 
         Args:
-            url (_type_): _description_
+            url (str): url where we want to extract the recipe.
 
         Returns:
-            dict: _description_
+            Recipe: Recipe extracted.
         """
+        
+        # Verify that the extracted strategy exists
+        domain_request = urlparse(url).hostname
+        strategy = self.strategies.get(domain_request)
+        
+        if strategy is None:
+            return None
+        
+        # Get the content of the page
         response = requests.get(url, timeout=2)
+        content = BeautifulSoup(response.content, "html.parser")
+        content.prettify()
 
-        soup = BeautifulSoup(response.content, "html.parser")
-        soup.prettify()
-
-        marmiton = MarmitonExtractor(soup)
-        return marmiton.get_data()
+        # Given the strategy, extract the recipe
+        return Recipe(strategy(content).extract())

@@ -21,7 +21,7 @@ class RecipeStepSerializer(serpy.Serializer):
     text = serpy.StrField()
 
 
-class Recipe(serpy.Serializer):
+class Recipe(): # serpy.Serializer
     """TODO
 
     Args:
