@@ -3,32 +3,13 @@ from typing import List
 from bs4 import BeautifulSoup
 import requests
 
-
-class URLExtractor:
-    """TODO
-    """
-
-    def extract(self):
-        """Extract 
-        TODO ::
-        """
-        recipe_links = self.content.find_all(
-            "a", {"class": "recipe-card-link"})
-        urls = [a.get('href') for a in recipe_links]
-
-        self.data['urls'] = urls
-
-    def __init__(self, content: BeautifulSoup) -> None:
-        self.content = content
-        self.data = {}
-        self.extract()
+from cookingplanner.scraping.scraping_extractor_strategy import ManagerExtractorStrategy
 
 
 class ScrapingURL:
     """Scraping ULR class.
-
-    Returns:
-        _type_: _description_
+    
+    Given a list of url, extract the recipe url present.
     """
 
     # List of URL to get recipe. They need to end with a '/'
@@ -38,6 +19,8 @@ class ScrapingURL:
 
     def __init__(self, n_pages: int = 1) -> None:
         self.n_pages = n_pages
+        
+        self.manager_extractor = ManagerExtractorStrategy()
         
     def generate_target_url(self) -> List[str]:
         """Given the number of pages and the requested url, 
@@ -73,14 +56,15 @@ class ScrapingURL:
 
         for target_page_url in self.generate_target_url():
 
-            # Get the request
-            response = requests.get(target_page_url, timeout=2)
-            soup = BeautifulSoup(response.content, "html.parser")
-            soup.prettify()
-            
-            # Extract the URL
-            url_extractor = URLExtractor(soup)
-            urls += url_extractor.data.get('urls', [])
-            
-
+            # Get the strategy for the url and extract the url
+            strategy = self.manager_extractor.get(target_page_url)
+            if strategy is not None:
+                # Get the request
+                response = requests.get(target_page_url, timeout=2)
+                content = BeautifulSoup(response.content, "html.parser")
+                content.prettify()
+                
+                # Extract the URL
+                urls += strategy(content).extract_recipe_urls()
+        
         return urls

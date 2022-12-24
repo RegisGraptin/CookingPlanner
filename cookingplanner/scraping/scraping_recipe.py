@@ -1,11 +1,10 @@
-from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
 
 from cookingplanner.recipe.recipe import Recipe
 from cookingplanner.scraping.scraping_extractor_strategy import \
-    MarmitonExtractorStrategy
+    ManagerExtractorStrategy
 
 
 class ScrapingRecipe:
@@ -17,10 +16,8 @@ class ScrapingRecipe:
 
     def __init__(self) -> None:
         """Initialize the strategies based on the domain name."""
+        self.manager_extractor = ManagerExtractorStrategy()
         
-        self.strategies = {
-            urlparse("https://www.marmiton.org").hostname: MarmitonExtractorStrategy
-        }
 
     def scrap(self, url: str) -> Recipe:
         """Given a url, extract the recipe from it.
@@ -33,8 +30,7 @@ class ScrapingRecipe:
         """
         
         # Verify that the extracted strategy exists
-        domain_request = urlparse(url).hostname
-        strategy = self.strategies.get(domain_request)
+        strategy = self.manager_extractor.get(url)
         
         if strategy is None:
             return None
@@ -45,4 +41,4 @@ class ScrapingRecipe:
         content.prettify()
 
         # Given the strategy, extract the recipe
-        return Recipe(strategy(content).extract())
+        return strategy(content).extract_recipe()

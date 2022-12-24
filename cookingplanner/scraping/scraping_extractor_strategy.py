@@ -1,6 +1,10 @@
 
 import json
+from typing import List
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup
+from cookingplanner.recipe.recipe import Recipe
+from cookingplanner.utils.singleton import SingletonMeta
 
 
 class ExtractorStrategyInterface:
@@ -9,13 +13,20 @@ class ExtractorStrategyInterface:
     Define the needed implementation for extracted content from a page.
     """
     
-    def extract(self) -> dict:
+    def extract_recipe(self) -> Recipe:
         """Extract the information from a given 
 
         Returns:
             dict: Extracted data.
         """
 
+    def extract_recipe_urls(self) -> List[str]:
+        """Given a page, extract the urls recipe
+
+        Returns:
+            List[str]: List of recipe urls extracted.
+        """
+        
 class MarmitonExtractorStrategy(ExtractorStrategyInterface):
     """Extract information from a marmiton page.
     
@@ -57,11 +68,7 @@ class MarmitonExtractorStrategy(ExtractorStrategyInterface):
                             self.data['recipeInstructions'] = content['recipeInstructions']
                             self.data['recipeCuisine'] = content['recipeCuisine']
 
-    def __init__(self, content: BeautifulSoup) -> None:
-        self.content = content
-        self.data = {}
-
-    def extract(self) -> dict:
+    def extract_recipe(self) -> dict:
         """Extract the information from a Marmiton page and return the extracted data.
 
         Returns:
@@ -69,4 +76,53 @@ class MarmitonExtractorStrategy(ExtractorStrategyInterface):
         """
         self._extract_total_time_duration()
         self._extract_recipe()
-        return self.data
+        return Recipe(self.data)
+    
+    def extract_recipe_urls(self) -> List[str]:
+        """Extract the recipe urls present on the page.
+
+        Returns:
+            List[str]: List of the urls extracted.
+        """
+        
+        recipe_links = self.content.find_all(
+            "a", {"class": "recipe-card-link"})
+        urls = [a.get('href') for a in recipe_links]
+
+        # Save the url
+        self.data['urls'] = urls
+        
+        return urls
+    
+    def __init__(self, content: BeautifulSoup) -> None:
+        self.content = content
+        self.data = {}
+
+class ManagerExtractorStrategy(metaclass=SingletonMeta):
+    """Manager Extractor Strategy class.
+    
+    Given a url, get the associated class allowing the extraction. 
+    This implementation allows the modularity of the extraction 
+    on new website by simply adding a new url domain and the 
+    corresponding `ExtractorStrategyInterface` class.
+
+    Args:
+        metaclass (SingletonMeta, optional): Singleton class. Defaults to SingletonMeta.
+    """
+    
+    def __init__(self) -> None:
+        self.strategies = {
+            urlparse("https://www.marmiton.org").hostname: MarmitonExtractorStrategy
+        }
+        
+    def get(self, url: str) -> ExtractorStrategyInterface:
+        """Given a url, return the associated extractor strategy.
+
+        Args:
+            url (str): Url we want to scrap.
+
+        Returns:
+            ExtractorStrategyInterface: Strategy for the extraction.
+        """
+        domain_request = urlparse(url).hostname
+        return self.strategies.get(domain_request)
