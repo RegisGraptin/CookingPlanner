@@ -11,6 +11,10 @@ poetry run python your_script.py
 
 poetry run pytest
 
+Note: Coverage test
+
+poetry run pytest --cov
+
 ## Activate the environment
 
 poetry shell
