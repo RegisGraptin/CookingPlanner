@@ -116,3 +116,12 @@ class RecipeStorage(metaclass=SingletonMeta):
             str: Path of the configuration file.
         """    
         return self.config_path
+
+
+    @classmethod
+    def destroy(cls):
+        """Destroy the current object.
+        
+        Use for testing purpose. Do not use in production.
+        """
+        del cls._instances[cls]

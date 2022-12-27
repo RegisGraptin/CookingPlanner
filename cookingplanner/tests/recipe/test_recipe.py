@@ -1,5 +1,6 @@
 
 from cookingplanner.recipe.recipe import Recipe, RecipeStep
+from cookingplanner.recipe.recipe_storage import RecipeStorage
 
 def test_recipe_definition_from_raw_data(fixture_raw_recipe):
     """TODO
@@ -35,3 +36,13 @@ def test_recipe_definition_from_raw_data(fixture_raw_recipe):
     
     assert recipe.recipe_instructions[-1].type == "HowToStep"
     assert recipe.recipe_instructions[-1].text == "Laisser cuire doucement 60 min à partir de la mise en rotation de la soupape."
+
+
+def test_recipe_storage_with_data(fixture_recipe_storage_with_data: RecipeStorage):
+    """Test loading recipe storage with data.
+
+    Args:
+        fixture_recipe_storage_with_data (RecipeStorage): Recipe storage with data
+    """
+    assert len(fixture_recipe_storage_with_data.get_all_recipes_with_url()) >= 10
+    
