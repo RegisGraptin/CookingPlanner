@@ -1,7 +1,8 @@
 import os
 import json
 import random
-from cookingplanner.recipe.recipe import RecipeSerializer
+from typing import List, Tuple
+from cookingplanner.recipe.recipe import Recipe, RecipeSerializer
 
 from cookingplanner.utils.singleton import SingletonMeta
 
@@ -37,7 +38,7 @@ class RecipeStorage(metaclass=SingletonMeta):
         recipe_data = []
         
         with open(self.config_path, 'w', encoding="utf-8") as file:
-            for url, recipe in self.get():
+            for url, recipe in self.get_all_recipes_with_url():
                 recipe_data.append((url, RecipeSerializer(recipe).data))
             
             data["recipes"] = recipe_data
@@ -70,20 +71,32 @@ class RecipeStorage(metaclass=SingletonMeta):
         if self.exists(url):
             return
         
-        print("Here ?")
-        
         self.data['recipes'].append(
             (url, recipe)
         )
         self.save()
         
-    def get(self):
-        """TODO
+    def get_all_recipes_with_url(self) -> List[Tuple[str, Recipe]]:
+        """Get all recipes from our recipe storage.
 
         Returns:
-            _type_: _description_
+            List[Recipe]: List of all the recipe.
         """
         return self.data.get('recipes', [])
+        
+    def get(self, url: str) -> Recipe:
+        """Given an url, get the saved recipe.
+
+        Args:
+            url (str): Requested url recipe.
+
+        Returns:
+            Recipe: Recipe associated to the requested url.
+        """
+        for tup in self.get_all_recipes_with_url():
+            if tup[0] == url:
+                return tup[1]
+        return None
     
     def exists(self, url: str) -> bool:
         """Indicate if the given url already exists.
@@ -94,14 +107,12 @@ class RecipeStorage(metaclass=SingletonMeta):
         Returns:
             bool: True if the url is already presents.
         """
-        return any(url == tup[0] for tup in self.get())
-    
+        return any(url == tup[0] for tup in self.get_all_recipes_with_url())
     
     def get_config_path(self) -> str:
         """Get the configuration file path.
 
         Returns:
             str: Path of the configuration file.
-        """
-        
+        """    
         return self.config_path

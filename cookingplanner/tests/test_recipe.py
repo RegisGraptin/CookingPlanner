@@ -31,22 +31,27 @@ def fixture_test_recipe() -> Recipe:
     """
     return Recipe({}, "http://test.com")
 
-    
 def test_recipe_storage_initialization(recipe_storage):
     """Initialize a recipe storage."""
     assert isinstance(recipe_storage, RecipeStorage)
-    assert recipe_storage.get() == []
+    assert recipe_storage.get_all_recipes_with_url() == []
 
 def test_recipe_storage_add_recipe(recipe_storage: RecipeStorage, test_recipe: Recipe):
-    """TODO"""
+    """Test the adding function of the recipe storage.
 
+    Args:
+        recipe_storage (RecipeStorage): Recipe storage for testing.
+        test_recipe (Recipe): Test recipe.
+    """
+    # Add a new recipe
     recipe_storage.add(test_recipe.source, test_recipe)
-    
-    # Check save
     assert recipe_storage.exists(test_recipe.source)
     
+    # Get the recipe saved 
+    recipe = recipe_storage.get(test_recipe.source)
+    assert recipe == test_recipe
     
-
+    
 def test_recipe_definition_from_raw_data():
     """TODO
     """
