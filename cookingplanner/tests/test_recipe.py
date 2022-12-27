@@ -1,27 +1,19 @@
 
-import pytest
-
 from cookingplanner.recipe.recipe_storage import RecipeStorage
 from cookingplanner.recipe.recipe import Recipe, RecipeStep
 
-# from cookingplanner.tests.fixture.fixture_recipe_storage import fixture_recipe_storage
+def test_recipe_storage_initialization(fixture_recipe_storage: RecipeStorage):
+    """Initialize a recipe storage.
 
-
-@pytest.fixture(name="test_recipe")
-def fixture_test_recipe() -> Recipe:
-    """Create a Recipe object for testing purpose.
-
-    Returns:
-        Recipe: Recipe object for testing.
+    Args:
+        fixture_recipe_storage (RecipeStorage): Recipe storage for testing.
     """
-    return Recipe({}, "http://test.com")
-
-def test_recipe_storage_initialization(fixture_recipe_storage):
-    """Initialize a recipe storage."""
     assert isinstance(fixture_recipe_storage, RecipeStorage)
     assert fixture_recipe_storage.get_all_recipes_with_url() == []
 
-def test_recipe_storage_add_recipe(fixture_recipe_storage: RecipeStorage, test_recipe: Recipe):
+def test_recipe_storage_add_recipe(
+    fixture_recipe_storage: RecipeStorage, 
+    fixture_test_recipe: Recipe):
     """Test the adding function of the recipe storage.
 
     Args:
@@ -29,12 +21,12 @@ def test_recipe_storage_add_recipe(fixture_recipe_storage: RecipeStorage, test_r
         test_recipe (Recipe): Test recipe.
     """
     # Add a new recipe
-    fixture_recipe_storage.add(test_recipe.source, test_recipe)
-    assert fixture_recipe_storage.exists(test_recipe.source)
+    fixture_recipe_storage.add(fixture_test_recipe.source, fixture_test_recipe)
+    assert fixture_recipe_storage.exists(fixture_test_recipe.source)
     
     # Get the recipe saved 
-    recipe = fixture_recipe_storage.get(test_recipe.source)
-    assert recipe == test_recipe
+    recipe = fixture_recipe_storage.get(fixture_test_recipe.source)
+    assert recipe == fixture_test_recipe
     
     
 def test_recipe_definition_from_raw_data():
