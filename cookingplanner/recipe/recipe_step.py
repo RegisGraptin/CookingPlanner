@@ -1,6 +1,5 @@
 
-
-import serpy
+import json
 
 
 class RecipeStep:
@@ -18,15 +17,12 @@ class RecipeStep:
     def __init__(self, step_type: str, step_text: str):
         self.type = step_type
         self.text = step_text
-        # self.type = recipe_step.get("@type", "")
-        # self.text = recipe_step.get("text", "")
 
 
-class RecipeStepSerializer(serpy.Serializer):
-    """TODO
+    def to_json(self) -> str:
+        """Convert current object to json format.
 
-    Args:
-        serpy (_type_): _description_
-    """
-    type = serpy.StrField()
-    text = serpy.StrField()
+        Returns:
+            str: Json encoding.
+        """
+        return json.dumps(self, default=lambda o: o.__dict__,  sort_keys=True, indent=4)

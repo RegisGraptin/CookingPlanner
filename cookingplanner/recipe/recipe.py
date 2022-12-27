@@ -1,8 +1,9 @@
 
-import serpy
-from cookingplanner.recipe.recipe_step import RecipeStep, RecipeStepSerializer
 
-class Recipe(): # serpy.Serializer
+import json
+from cookingplanner.recipe.recipe_step import RecipeStep
+
+class Recipe:
     """TODO
 
     Args:
@@ -28,21 +29,12 @@ class Recipe(): # serpy.Serializer
             self.recipe_instructions.append(
                 RecipeStep(step_data.get('type'), step_data.get('text'))
             )
-        
+            
     
+    def to_json(self) -> str:
+        """Encode object to json.
 
-class RecipeSerializer(serpy.Serializer):
-    """Recipe Serializer class."""
-    
-    name         = serpy.StrField()
-    duration     = serpy.StrField()
-    prep_time    = serpy.StrField()
-    cook_time    = serpy.StrField()
-    total_time   = serpy.StrField()
-    recipe_yield = serpy.StrField()
-    
-    recipe_ingredient = serpy.Serializer(serpy.StrField, many=True)
-    recipe_instructions = serpy.Serializer(RecipeStepSerializer, many=True)
-    
-    recipe_cuisine = serpy.StrField()
-    source = serpy.StrField()
+        Returns:
+            str: Encoded object.
+        """
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

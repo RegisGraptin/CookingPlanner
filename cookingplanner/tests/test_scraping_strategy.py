@@ -60,4 +60,16 @@ def test_marmiton_strategy():
     recipe_extracted = scraping_recipe.scrap(target_url)
     
     assert isinstance(recipe_extracted, Recipe)
+    assert recipe_extracted.name is not None
+    assert recipe_extracted.duration is not None
+    assert recipe_extracted.prep_time is not None
+    assert recipe_extracted.cook_time is not None
+    assert recipe_extracted.total_time is not None
+    assert recipe_extracted.recipe_yield is not None
+    assert recipe_extracted.recipe_ingredient is not None
+    assert len(recipe_extracted.recipe_ingredient) > 0 
+    assert recipe_extracted.recipe_cuisine is not None
+    assert recipe_extracted.source is not None
+    assert recipe_extracted.recipe_instructions is not None
+    assert len(recipe_extracted.recipe_instructions) > 0 
     

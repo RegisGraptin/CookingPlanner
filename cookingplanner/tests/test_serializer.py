@@ -1,6 +1,8 @@
 
+import json
+
 from cookingplanner.recipe.recipe import Recipe
-from cookingplanner.recipe.recipe_step import RecipeStep, RecipeStepSerializer
+from cookingplanner.recipe.recipe_step import RecipeStep
 
 
 def test_recipe_step_serializer():
@@ -9,7 +11,7 @@ def test_recipe_step_serializer():
     step_raw_data = {"type": "HowToStep", "text": "Hacher les oignons. Peler l'ail."}
     
     recipe_step    = RecipeStep(step_raw_data.get('type'), step_raw_data.get('text'))
-    serialize_data = RecipeStepSerializer(recipe_step).data
+    serialize_data = json.loads(recipe_step.to_json())
     
     assert step_raw_data["type"] == serialize_data["type"]
     assert step_raw_data["text"] == serialize_data["text"]
@@ -17,36 +19,23 @@ def test_recipe_step_serializer():
 
 
 def test_recipe_serializer(fixture_raw_recipe):
-    """TODO
-    """
-    
-    
-    Recipe(fixture_raw_recipe)
-    # recipe = Recipe(recipe_raw_data)
-    # serialize_data = 
-    
-    # assert recipe
-    
-    
-    
+    """Test the serialization on the Recipe class."""
 
-
-# def test_recipe_serializer():
+    recipe            = Recipe(fixture_raw_recipe)
+    serialized_recipe = json.loads(recipe.to_json())
     
-#     recipe_raw_data = {"duration": "1 h 10 min", "name": "Boeuf Bourguignon rapide", "prepTime": "PT10M", "cookTime": "PT60M", "totalTime": "PT70M", "recipeYield": "6 personnes", "recipeIngredient": ["100 g de lardons", "50 g de beurre ou 3 cuill\u00e8res \u00e0 soupe d'huile", "2/3 l de vin rouge", "2 oignons", "1 gousse d'ail", "2 c.\u00e0.s de farine", "1 bouquet garni", "250 g de champignon de Paris (en bo\u00eete)", "sel", "poivre", "800 g de boeuf pour bourguignon"], "recipeInstructions": [{"@type": "HowToStep", "text": "Hacher les oignons. Peler l'ail."}, {"@type": "HowToStep", "text": "Dans une cocotte minute, faire roussir la viande et les lardons dans l\u2019huile ou le beurre. "}, {"@type": "HowToStep", "text": "Ajouter les oignons, les champignons \u00e9goutt\u00e9s et saupoudrer de fariner. M\u00e9langer et laisser dorer un instant."}, {"@type": "HowToStep", "text": "Mouiller avec le vin rouge qui doit recouvrir la viande. "}, {"@type": "HowToStep", "text": "Saler et poivrer. "}, {"@type": "HowToStep", "text": "Ajouter l\u2019ail et le bouquet garni. "}, {"@type": "HowToStep", "text": "Fermer la cocotte minute. "}, {"@type": "HowToStep", "text": "Laisser cuire doucement 60 min \u00e0 partir de la mise en rotation de la soupape."}], "recipeCuisine": "Plat principal"}
+    assert serialized_recipe['source'] is not None
+    assert serialized_recipe['recipe_ingredient'] is not None
+    assert serialized_recipe['recipe_instructions'] is not None
     
-#     recipe = Recipe(recipe_raw_data)
-
-#     e = json.JSONEncoder()
-#     print(e.encode(recipe))
+    assert len(serialized_recipe['recipe_ingredient']) > 0
+    assert len(serialized_recipe['recipe_ingredient']) > 0
     
-#     # with open("/tmp/testing", "w") as f:
-#     #     json.dump(recipe, f)
+    assert serialized_recipe['recipe_ingredient'][0] == "100 g de lardons"
+    assert serialized_recipe['recipe_ingredient'][-1] == "800 g de boeuf pour bourguignon"
     
-#     # print(recipe)
+    assert serialized_recipe['recipe_instructions'][0]['type'] == "HowToStep"
+    assert serialized_recipe['recipe_instructions'][0]['text'] == "Hacher les oignons. Peler l'ail."
     
-#     # recipe_encode = json(recipe)
-    
-#     # print(recipe_encode)
-    
-    
+    assert serialized_recipe['recipe_instructions'][-1]['type'] == "HowToStep"
+    assert serialized_recipe['recipe_instructions'][-1]['text'] == "Laisser cuire doucement 60 min à partir de la mise en rotation de la soupape."

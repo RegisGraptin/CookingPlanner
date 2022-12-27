@@ -2,7 +2,7 @@ import os
 import json
 import random
 from typing import List, Tuple
-from cookingplanner.recipe.recipe import Recipe, RecipeSerializer
+from cookingplanner.recipe.recipe import Recipe
 
 from cookingplanner.utils.singleton import SingletonMeta
 
@@ -39,7 +39,7 @@ class RecipeStorage(metaclass=SingletonMeta):
         
         with open(self.config_path, 'w', encoding="utf-8") as file:
             for url, recipe in self.get_all_recipes_with_url():
-                recipe_data.append((url, RecipeSerializer(recipe).data))
+                recipe_data.append((url, recipe.to_json()))
             
             data["recipes"] = recipe_data
             
