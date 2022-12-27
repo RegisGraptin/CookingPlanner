@@ -1,26 +1,11 @@
 
-import os
 import pytest
+
 from cookingplanner.recipe.recipe_storage import RecipeStorage
 from cookingplanner.recipe.recipe import Recipe, RecipeStep
 
-TEST_CONFIG_PATH = "/tmp/"
+# from cookingplanner.tests.fixture.fixture_recipe_storage import fixture_recipe_storage
 
-@pytest.fixture(name="recipe_storage")
-def fixture_recipe_storage():
-    """Initiliaze the recipe storage for testing.
-
-    Yields:
-        RecipeStorage: Recipe storage instance for testing.
-    """
-    # Initiliaze the recipe storage
-    _recipe_storage = RecipeStorage(TEST_CONFIG_PATH)
-    yield _recipe_storage
-    
-    # Delete it 
-    config_path = _recipe_storage.get_config_path()
-    if os.path.exists(config_path):
-        os.remove(config_path)
 
 @pytest.fixture(name="test_recipe")
 def fixture_test_recipe() -> Recipe:
@@ -31,12 +16,12 @@ def fixture_test_recipe() -> Recipe:
     """
     return Recipe({}, "http://test.com")
 
-def test_recipe_storage_initialization(recipe_storage):
+def test_recipe_storage_initialization(fixture_recipe_storage):
     """Initialize a recipe storage."""
-    assert isinstance(recipe_storage, RecipeStorage)
-    assert recipe_storage.get_all_recipes_with_url() == []
+    assert isinstance(fixture_recipe_storage, RecipeStorage)
+    assert fixture_recipe_storage.get_all_recipes_with_url() == []
 
-def test_recipe_storage_add_recipe(recipe_storage: RecipeStorage, test_recipe: Recipe):
+def test_recipe_storage_add_recipe(fixture_recipe_storage: RecipeStorage, test_recipe: Recipe):
     """Test the adding function of the recipe storage.
 
     Args:
@@ -44,11 +29,11 @@ def test_recipe_storage_add_recipe(recipe_storage: RecipeStorage, test_recipe: R
         test_recipe (Recipe): Test recipe.
     """
     # Add a new recipe
-    recipe_storage.add(test_recipe.source, test_recipe)
-    assert recipe_storage.exists(test_recipe.source)
+    fixture_recipe_storage.add(test_recipe.source, test_recipe)
+    assert fixture_recipe_storage.exists(test_recipe.source)
     
     # Get the recipe saved 
-    recipe = recipe_storage.get(test_recipe.source)
+    recipe = fixture_recipe_storage.get(test_recipe.source)
     assert recipe == test_recipe
     
     
