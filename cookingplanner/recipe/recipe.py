@@ -1,25 +1,6 @@
 
 import serpy
-
-class RecipeStep:
-    """TODO
-    """
-    # {"@type": "HowToStep", "text": "Hacher les oignons. Peler l'ail."} 
-    
-    def __init__(self, recipe_step: dict):
-        self.type = recipe_step.get("@type", "")
-        self.text = recipe_step.get("text", "")
-
-
-class RecipeStepSerializer(serpy.Serializer):
-    """TODO
-
-    Args:
-        serpy (_type_): _description_
-    """
-    type = serpy.StrField(label="@type")
-    text = serpy.StrField()
-
+from cookingplanner.recipe.recipe_step import RecipeStep, RecipeStepSerializer
 
 class Recipe(): # serpy.Serializer
     """TODO
@@ -43,3 +24,19 @@ class Recipe(): # serpy.Serializer
         
         self.source = source
     
+
+class RecipeSerializer(serpy.Serializer):
+    """Recipe Serializer class."""
+    
+    name         = serpy.StrField()
+    duration     = serpy.StrField()
+    prep_time    = serpy.StrField()
+    cook_time    = serpy.StrField()
+    total_time   = serpy.StrField()
+    recipe_yield = serpy.StrField()
+    
+    recipe_ingredient = serpy.Serializer(serpy.StrField, many=True)
+    recipe_instructions = serpy.Serializer(RecipeStepSerializer, many=True)
+    
+    recipe_cuisine = serpy.StrField()
+    source = serpy.StrField()

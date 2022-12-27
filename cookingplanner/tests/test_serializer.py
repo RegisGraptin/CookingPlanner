@@ -1,5 +1,6 @@
 
-from cookingplanner.recipe.recipe import RecipeStepSerializer, RecipeStep, Recipe
+from cookingplanner.recipe.recipe import Recipe
+from cookingplanner.recipe.recipe_step import RecipeStep, RecipeStepSerializer
 
 
 def test_recipe_step_serializer():

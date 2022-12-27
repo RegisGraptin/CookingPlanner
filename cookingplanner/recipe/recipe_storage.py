@@ -1,6 +1,7 @@
 import os
 import json
 import random
+from cookingplanner.recipe.recipe import RecipeSerializer
 
 from cookingplanner.utils.singleton import SingletonMeta
 
@@ -27,14 +28,27 @@ class RecipeStorage(metaclass=SingletonMeta):
         
         if os.path.exists(self.config_path):
             # Read the file
-            with open(self.config_path, 'r', encoding="utf-8") as file:
-                self.data = json.load(file)
+            self.read()
     
     def save(self):
         """Save the data"""
+        
+        data = {}
+        recipe_data = []
+        
         with open(self.config_path, 'w', encoding="utf-8") as file:
-            json.dump(self.data, file)
-                
+            for url, recipe in self.get():
+                recipe_data.append((url, RecipeSerializer(recipe).data))
+            
+            data["recipes"] = recipe_data
+            
+            json.dump(data, file)
+    
+    def read(self):
+        """Read the data from the json file."""
+        with open(self.config_path, 'r', encoding="utf-8") as file:
+            self.data = json.load(file)
+            
     
     def get_random(self):
         """TODO
@@ -53,10 +67,10 @@ class RecipeStorage(metaclass=SingletonMeta):
         """
         
         # TODO: Verify if recipe exists or not
+        if self.exists(url):
+            return
         
-        urls = [u[0] for u in self.data['recipes']]
-        if url in urls: 
-            return 
+        print("Here ?")
         
         self.data['recipes'].append(
             (url, recipe)
@@ -82,3 +96,12 @@ class RecipeStorage(metaclass=SingletonMeta):
         """
         return any(url == tup[0] for tup in self.get())
     
+    
+    def get_config_path(self) -> str:
+        """Get the configuration file path.
+
+        Returns:
+            str: Path of the configuration file.
+        """
+        
+        return self.config_path

@@ -55,3 +55,9 @@ if __name__ == "__main__":
     # TODO :: Add script call for the generation of data.
     
     generate_data()
+    
+    # recipe_storage = RecipeStorage("/tmp/")
+    
+    # url = "http://test.com"
+    # test_recipe = Recipe({}, "http://test.com")
+    # recipe_storage.add(url, test_recipe)

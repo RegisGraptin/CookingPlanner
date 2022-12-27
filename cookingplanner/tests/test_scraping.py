@@ -13,8 +13,7 @@ MOCKED_URL = {}
 
 @pytest.fixture(autouse=True)
 def get_missing_mocked_requests():
-    """TODO
-    """
+    """Initialize the requets and load them in order to mocked them later."""
     
     scraping_url = ScrapingURL(n_pages=1)
     target_urls = scraping_url.generate_target_url()
@@ -50,10 +49,13 @@ def get_missing_mocked_requests():
         # Initialize url mocking            
         MOCKED_URL[url] = content
 
-        
+      
 @responses.activate
 def test_scraping_url():
-    """TODO"""
+    """Test the scraping url behavior by scrapping the recipe url on a page. 
+    
+    We currently have only a marmiton page. We check that we extract all the recipe on it.
+    """
         
     # Set mocking response
     for url, content in MOCKED_URL.items():

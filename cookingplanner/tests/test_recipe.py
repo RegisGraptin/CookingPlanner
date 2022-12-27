@@ -1,17 +1,52 @@
 
+import os
+import pytest
 from cookingplanner.recipe.recipe_storage import RecipeStorage
 from cookingplanner.recipe.recipe import Recipe, RecipeStep
 
 TEST_CONFIG_PATH = "/tmp/"
 
-def test_recipe_storage_initialization():
-    """TODO
+@pytest.fixture(name="recipe_storage")
+def fixture_recipe_storage():
+    """Initiliaze the recipe storage for testing.
+
+    Yields:
+        RecipeStorage: Recipe storage instance for testing.
     """
-    recipe_storage = RecipeStorage(TEST_CONFIG_PATH)
+    # Initiliaze the recipe storage
+    _recipe_storage = RecipeStorage(TEST_CONFIG_PATH)
+    yield _recipe_storage
     
+    # Delete it 
+    config_path = _recipe_storage.get_config_path()
+    if os.path.exists(config_path):
+        os.remove(config_path)
+
+@pytest.fixture(name="test_recipe")
+def fixture_test_recipe() -> Recipe:
+    """Create a Recipe object for testing purpose.
+
+    Returns:
+        Recipe: Recipe object for testing.
+    """
+    return Recipe({}, "http://test.com")
+
+    
+def test_recipe_storage_initialization(recipe_storage):
+    """Initialize a recipe storage."""
     assert isinstance(recipe_storage, RecipeStorage)
     assert recipe_storage.get() == []
+
+def test_recipe_storage_add_recipe(recipe_storage: RecipeStorage, test_recipe: Recipe):
+    """TODO"""
+
+    recipe_storage.add(test_recipe.source, test_recipe)
     
+    # Check save
+    assert recipe_storage.exists(test_recipe.source)
+    
+    
+
 def test_recipe_definition_from_raw_data():
     """TODO
     """
