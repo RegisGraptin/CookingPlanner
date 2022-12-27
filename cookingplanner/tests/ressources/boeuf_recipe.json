@@ -1,0 +1,56 @@
+{
+    "duration": "1 h 10 min",
+    "name": "Boeuf Bourguignon rapide",
+    "prepTime": "PT10M",
+    "cookTime": "PT60M",
+    "totalTime": "PT70M",
+    "recipeYield": "6 personnes",
+    "recipeIngredient": [
+      "100 g de lardons",
+      "50 g de beurre ou 3 cuillères à soupe d'huile",
+      "2/3 l de vin rouge",
+      "2 oignons",
+      "1 gousse d'ail",
+      "2 c.à.s de farine",
+      "1 bouquet garni",
+      "250 g de champignon de Paris (en boîte)",
+      "sel",
+      "poivre",
+      "800 g de boeuf pour bourguignon"
+    ],
+    "recipeInstructions": [
+      {
+        "type": "HowToStep",
+        "text": "Hacher les oignons. Peler l'ail."
+      },
+      {
+        "type": "HowToStep",
+        "text": "Dans une cocotte minute, faire roussir la viande et les lardons dans l’huile ou le beurre. "
+      },
+      {
+        "type": "HowToStep",
+        "text": "Ajouter les oignons, les champignons égouttés et saupoudrer de fariner. Mélanger et laisser dorer un instant."
+      },
+      {
+        "type": "HowToStep",
+        "text": "Mouiller avec le vin rouge qui doit recouvrir la viande. "
+      },
+      {
+        "type": "HowToStep",
+        "text": "Saler et poivrer. "
+      },
+      {
+        "type": "HowToStep",
+        "text": "Ajouter l’ail et le bouquet garni. "
+      },
+      {
+        "type": "HowToStep",
+        "text": "Fermer la cocotte minute. "
+      },
+      {
+        "type": "HowToStep",
+        "text": "Laisser cuire doucement 60 min à partir de la mise en rotation de la soupape."
+      }
+    ],
+    "recipeCuisine": "Plat principal"
+  }
