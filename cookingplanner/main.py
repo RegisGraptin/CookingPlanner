@@ -1,7 +1,7 @@
 import argparse
 from datetime import date
 
-from cookingplanner.generator.meal_generator import DishWeeklyGenerator
+from cookingplanner.generator.meal_generator import UniqueMealStrategy
 from cookingplanner.recipe.recipe_storage import RecipeStorage
 from cookingplanner.generator.week_generator import WorkWeekGenerator
 from cookingplanner.scraping.scraping import Scraping
@@ -36,20 +36,25 @@ def show_url_recipe():
         print(recipe[0])
 
 
-def generate_a_week():
+def generate_next_week(strategy: str):
     """TODO
     """
+    today = date.today()
 
-    week_generator = WorkWeekGenerator()
+    # Generate the template for the next week
+    working_week = WorkWeekGenerator().generate(today)
 
-    # weekGenerator = WeekGenerator(when)
-    week = week_generator.generate(date.today())
+    print(strategy)
 
-    dishweek_generator = DishWeeklyGenerator()
-    week = dishweek_generator.generator(week)
+    if strategy == "unique":
 
-    print(week)
+        meal_generator = UniqueMealStrategy()
+        working_week = meal_generator.generate(working_week)
 
+        print(working_week)
+
+    else:
+        print(f"The strategy {strategy} does not exist!")
 
 if __name__ == "__main__":
     
@@ -57,9 +62,13 @@ if __name__ == "__main__":
         prog = 'Cooking Planner',
     )
     
-    parser.add_argument('--generate', action="store_true")
+    parser.add_argument('--update', action="store_true")
+    parser.add_argument('strategy', action="store", type=str)
     args = parser.parse_args()
     
-    if args.generate:
+    if args.update:
         generate_data()
+        
+    if args.strategy:
+        generate_next_week(args.strategy)
     

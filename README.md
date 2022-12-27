@@ -10,8 +10,15 @@ This allow us to organize the shopping list, the dishes, the recipes...
 
 ```bash
 export PYTHONPATH="${PYTHONPATH}:./cookingplanner/"
-poetry run python ./cookingplanner/main.py
+poetry run python ./cookingplanner/main.py --update name_of_strategy
 ```
+
+### Parameters
+
+- `--update`: indicates we want to scrap online website for getting recipes.
+- `strategy`: indicates the types of strategy we want to apply to generate the next week.
+        - `unique`: Strategy of having a different recipe each day of the week.
+
 
 ## Linter & Testing
 
