@@ -1,4 +1,5 @@
 
+from abc import ABCMeta
 from datetime import date
 from typing import List
 from enum import Enum
@@ -89,18 +90,18 @@ class Day:
             out += str(moment) + "\n"
         return out
     
+class Period(metaclass=ABCMeta):
+    """Period class abstract.
     
-class Week:
-    """Week class."""
+    Define a period of days.
+
+    Args:
+        metaclass (ABCMeta, optional): Abstract class. Defaults to ABCMeta.
+    """
     
     def __init__(self, days: List[Day]) -> None:
-        """Need to have 7 days generated
-
-        Args:
-            days (List[Day]): List of the day
-        """
         self.days = days
-        
+    
     def get_days(self) -> List[Day]:
         """Get the days.
 
@@ -109,10 +110,13 @@ class Week:
         """
         return self.days
     
-
     def __str__(self) -> str:
         out = ""
         for day in self.days:
             out += "-" * 20
             out += str(day) + "\n" 
         return out        
+
+
+class Week(Period):
+    """Week class."""

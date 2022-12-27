@@ -7,6 +7,7 @@ from cookingplanner.recipe.recipe_storage import RecipeStorage
 from cookingplanner.generator.week_generator import Week
 
 class UniqueRecipeStrategy:
+    """TODO"""
     
     def __init__(self, recipes: List[Tuple[str, dict]]) -> None:
         """Unique Recipe Strategy
@@ -19,6 +20,7 @@ class UniqueRecipeStrategy:
         self.recipes_seen = set()
         
     def reset(self):
+        """TODO"""
         self.recipes_seen = set()
         
     def generate(self) -> str:
@@ -46,6 +48,7 @@ class UniqueRecipeStrategy:
 
 
 class DishWeeklyGenerator:
+    """TODO"""
     
     def __init__(self) -> None:
         
@@ -56,6 +59,7 @@ class DishWeeklyGenerator:
         self.strategy = UniqueRecipeStrategy(self.recipes)
         
     def generator(self, week: Week) -> Week:
+        """TODO"""
         
         # Get the day of the weeks
         days = week.get_days()
@@ -63,7 +67,7 @@ class DishWeeklyGenerator:
         for day in days:
             dishes = day.get_dishes()
             for dish in dishes:
-                moment = dish.get_moment()
+                _ = dish.get_moment()
                 
                 recipe = self.strategy.generate()
                 

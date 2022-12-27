@@ -1,7 +1,7 @@
 import argparse
 from datetime import date
 
-from cookingplanner.generator.dish_generator import DishWeeklyGenerator
+from cookingplanner.generator.meal_generator import DishWeeklyGenerator
 from cookingplanner.recipe.recipe_storage import RecipeStorage
 from cookingplanner.generator.week_generator import WorkWeekGenerator
 from cookingplanner.scraping.scraping import Scraping
