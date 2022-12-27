@@ -3,7 +3,7 @@ from datetime import date
 
 from cookingplanner.generator.dish_generator import DishWeeklyGenerator
 from cookingplanner.recipe.recipe_storage import RecipeStorage
-from cookingplanner.generator.week_generator import RegularWeekGenerator
+from cookingplanner.generator.week_generator import WorkWeekGenerator
 from cookingplanner.scraping.scraping import Scraping
 from cookingplanner.scraping.scraping_url import ScrapingURL
 
@@ -40,7 +40,7 @@ def generate_a_week():
     """TODO
     """
 
-    week_generator = RegularWeekGenerator()
+    week_generator = WorkWeekGenerator()
 
     # weekGenerator = WeekGenerator(when)
     week = week_generator.generate(date.today())

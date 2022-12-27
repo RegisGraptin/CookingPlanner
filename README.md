@@ -65,6 +65,9 @@ poetry shell
         Idea : Given a url and a website, we could have different manner of generating new urls.
         Thus this process should be delegated on the main class extractor (Marmiton, Recette-du-coin, ...)
 
+## MVP 
+
+- Hypothesis 1 : We generate only a main dish at the moment. In future version we could think on the decomposition of a meal in entree, main meal, dessert...
 
 
 # MONGO DB links

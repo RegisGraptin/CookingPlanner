@@ -1,22 +1,29 @@
 
 import datetime
 from datetime import date
+from typing import List
 
-from cookingplanner.recipe.recipe_storage import RecipeStorage
+from cookingplanner.generator.meal import DayName, Meal, Moment
+from cookingplanner.generator.meal import Day
+from cookingplanner.generator.meal import Week
 
-from cookingplanner.generator.day import Moment
-from cookingplanner.generator.day import Dish
-from cookingplanner.generator.day import Day
-from cookingplanner.generator.day import Week
-
-class RecipeGenerator:
-    pass
-
-
-class RegularWeekGenerator:
-    """RegularWeekGenerator class.
+class WeekGeneratorInterface:
+    """Interface for the generation of a week."""
     
-    Create dishes for breakfast, lunch and dinner for each day of the week.
+    def generate(self, starting_date: date) -> Week:
+        """Generate an empty week blueprint.
+
+        Args:
+            starting_date (date): Starting date of the generation.
+
+        Returns:
+            Week: Empty week generation.
+        """
+
+class AllDayWeekGenerator(WeekGeneratorInterface):
+    """All Day Week Generator class.
+    
+    Create meal for breakfast, lunch and dinner for each day of the week.
     """
     
     REGULAR_MOMENTS = [Moment.BREAKFAST, Moment.LUNCH, Moment.DINNER]
@@ -32,59 +39,108 @@ class RegularWeekGenerator:
         for _ in range(7):
             
             dishes = []
-            for moment in RegularWeekGenerator.REGULAR_MOMENTS:
-                dishes.append(Dish(moment, "")) 
+            for moment in AllDayWeekGenerator.REGULAR_MOMENTS:
+                dishes.append(Meal(moment, "")) 
                 
             days.append(Day(next_day, dishes))
             
             next_day = next_day + datetime.timedelta(days=1)
             
         return Week(days)
-            
-        
-            
-         
 
-
-class WeekGenerator:
-    """Define a set of constraint given a user.
-    """
-    DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+class WorkWeekGenerator(WeekGeneratorInterface):
+    """Work Week Generator class.
     
-    MOMENTS = ['breakfast', 'lunch', 'dinner']
+    Create meal for dinner for the days of the week when we work and lunch and dinner for the weekend.
+    """
+    
+    def __init__(self,
+                 workday: List[DayName] = None,
+                 weekend: List[DayName] = None):
+        
+        if workday is None:
+            workday = [DayName.MONDAY, DayName.TUESDAY, DayName.WEDNESDAY, 
+                       DayName.THURSDAY, DayName.FRIDAY]
+        
+        if weekend is None:
+            weekend = [DayName.SATURDAY, DayName.SUNDAY]
+        
+        self.workday = workday
+        self.weekend = weekend
+        
+        # Define the moment given a period of the week
+        self.workday_moment = [Moment.DINNER]
+        self.weekend_moment = [Moment.LUNCH, Moment.DINNER]
+
+    def generate(self, starting_date: date) -> Week:
+        days = []
+        
+        next_day = starting_date
+        
+        for _ in range(7):
+            dishes = []
+            
+            # We have a day of work
+            if next_day.weekday() in self.workday:
+                for moment in self.workday_moment:
+                    dishes.append(Meal(moment, ""))
+            elif next_day.weekday() in self.weekend:
+                for moment in self.weekend_moment:
+                    dishes.append(Meal(moment, ""))
+                
+            days.append(Day(next_day, dishes))
+            
+            next_day = next_day + datetime.timedelta(days=1)
+            
+        return Week(days)
+
+class GenericWeekGenerator(WeekGeneratorInterface):
+    """Generic week generator."""
     
     def __init__(self, when: dict) -> None:
-        self.when = when
-        
-        self.data = {}
-        
-        self.recipe_storage = RecipeStorage()
-        
-        self.generated_dish = 0
-        
+        """Given a dictionary of day and moment, generate a week.
 
-
-    def generate(self):
-        # For each days of the week
-        for day in WeekGenerator.DAYS:
-            self.data[day] = {}
-            requets_moments = self.when.get(day, [])
+        Args:
+            when (dict): Constraints of the week generation.
             
-            # For each moment
-            for moment in WeekGenerator.MOMENTS:
-                if moment in requets_moments:
-                    
-                    # Generate a dish
-                    url, recipe = self.recipe_storage.get_random()
-                    
-                    self.data[day][moment] = (url, recipe)
-                    self.generated_dish += 1
-                    
-        return self.data
-                    
-                    
-                
-                
+        Example:
+        when = {
+            'monday':    ['breakfast', 'dinner'],
+            'tuesday':   ['breakfast', 'dinner'],
+            'wednesday': ['breakfast', 'dinner'],
+            'thursday':  ['breakfast', 'dinner'],
+            'friday':    ['breakfast', 'dinner'],
+            'saturday':  ['breakfast', 'lunch', 'dinner'],
+            'sunday':    ['breakfast', 'lunch', 'dinner'],
+        }
+        """
+        super().__init__()
+        
+        self.when = when
+
+    def generate(self, starting_date: date) -> Week:    
+        days = []
+        next_day = starting_date
+        
+        for _ in range(7):
+            dishes = []
+            
+            day_value = next_day.weekday()
+            day_name  = DayName(day_value)
+            
+            if self.when.get(day_name) is not None:
+                moments = self.when.get(day_name)
+                for moment in moments:
+                    dishes.append(Meal(moment, ""))
+            
+            days.append(Day(next_day, dishes))
+            next_day = next_day + datetime.timedelta(days=1)
+        
+        return Week(days)
+            
+        
+            
+@DeprecationWarning    
 class DishesofTheWeek:
     """Determine the number of dish we need to have in the week.
     Based on this information generate the recipe for a given week
@@ -100,13 +156,11 @@ class DishesofTheWeek:
         
         for day_of_week in self.week.keys():
             for moment in self.week.get(day_of_week).keys():
-                url, recipe = self.week.get(day_of_week).get(moment)
+                url, _ = self.week.get(day_of_week).get(moment)
                 unique_dishes.add(url)
                 
         print(unique_dishes)
             
-        
-        
     def extract(self):
         """Extract the total duration time."""
         self._unique_dish()
@@ -114,7 +168,7 @@ class DishesofTheWeek:
 
 if __name__ == "__main__":
     
-    when = {
+    when_week = {
         'monday':    ['breakfast', 'dinner'],
         'tuesday':   ['breakfast', 'dinner'],
         'wednesday': ['breakfast', 'dinner'],
@@ -124,11 +178,11 @@ if __name__ == "__main__":
         'sunday':    ['breakfast', 'lunch', 'dinner'],
     }
     
-    week = WeekGenerator(when)
-    week.generate()
+    # week = WeekGenerator(when)
+    # week.generate()
     
-    print(week.generated_dish)
+    # print(week.generated_dish)
     
-    dish = DishesofTheWeek(week.data)
-    dish.extract()
+    # dish = DishesofTheWeek(week.data)
+    # dish.extract()
     
