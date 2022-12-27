@@ -1,3 +1,4 @@
+import argparse
 from datetime import date
 
 from cookingplanner.generator.dish_generator import DishWeeklyGenerator
@@ -52,12 +53,13 @@ def generate_a_week():
 
 if __name__ == "__main__":
     
-    # TODO :: Add script call for the generation of data.
+    parser = argparse.ArgumentParser(
+        prog = 'Cooking Planner',
+    )
     
-    generate_data()
+    parser.add_argument('--generate', action="store_true")
+    args = parser.parse_args()
     
-    # recipe_storage = RecipeStorage("/tmp/")
+    if args.generate:
+        generate_data()
     
-    # url = "http://test.com"
-    # test_recipe = Recipe({}, "http://test.com")
-    # recipe_storage.add(url, test_recipe)
