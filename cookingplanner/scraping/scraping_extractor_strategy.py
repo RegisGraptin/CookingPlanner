@@ -53,20 +53,27 @@ class MarmitonExtractorStrategy(ExtractorStrategyInterface):
                 if script.get('type') == "application/ld+json":
                     content = json.loads(script.text)
 
-                    if content.get('@type') is not None:
-                        if content.get('@type') == "Recipe":
-                            # print(content)
+                    if content.get('@type') is not None and content.get('@type') == "Recipe":
+                
+                        self.data['name']      = content['name']
+                        self.data['prepTime']  = content['prepTime']
+                        self.data['cookTime']  = content['cookTime']
+                        self.data['totalTime'] = content['totalTime']
 
-                            self.data['name']      = content['name']
-                            self.data['prepTime']  = content['prepTime']
-                            self.data['cookTime']  = content['cookTime']
-                            self.data['totalTime'] = content['totalTime']
+                        self.data['recipeYield'] = content['recipeYield']
 
-                            self.data['recipeYield'] = content['recipeYield']
-
-                            self.data['recipeIngredient'] = content['recipeIngredient']
-                            self.data['recipeInstructions'] = content['recipeInstructions']
-                            self.data['recipeCuisine'] = content['recipeCuisine']
+                        self.data['recipeIngredient'] = content['recipeIngredient']
+                        
+                        self.data['recipeCuisine'] = content['recipeCuisine']
+                        
+                        # Format [{"@type": type, "text": text}, ...]
+                        # {"@type": "HowToStep", "text": "Hacher les oignons. Peler l'ail."} 
+                        self.data['recipeInstructions'] = []
+                        for recipe_instruction in content['recipeInstructions']:
+                            self.data['recipeInstructions'].append(
+                                {'type': recipe_instruction.get('@type'), 'text': recipe_instruction.get('text')}
+                            )
+                            
 
     def extract_recipe(self) -> dict:
         """Extract the information from a Marmiton page and return the extracted data.

@@ -18,11 +18,17 @@ class Recipe(): # serpy.Serializer
         self.recipe_yield = recipe_data.get("recipeYield", None)
         
         self.recipe_ingredient   = recipe_data.get("recipeIngredient", [])
-        self.recipe_instructions = [RecipeStep(step) 
-                                   for step in recipe_data.get("recipeInstructions", [])]
+        
         self.recipe_cuisine      = recipe_data.get("recipeCuisine", None)
         
         self.source = source
+         
+        self.recipe_instructions = []
+        for step_data in recipe_data.get("recipeInstructions", []):
+            self.recipe_instructions.append(
+                RecipeStep(step_data.get('type'), step_data.get('text'))
+            )
+        
     
 
 class RecipeSerializer(serpy.Serializer):

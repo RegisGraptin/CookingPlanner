@@ -6,12 +6,12 @@ from cookingplanner.recipe.recipe_step import RecipeStep, RecipeStepSerializer
 def test_recipe_step_serializer():
     """Test the serialization on the RecipeStep class."""
     
-    step_raw_data = {"@type": "HowToStep", "text": "Hacher les oignons. Peler l'ail."}
+    step_raw_data = {"type": "HowToStep", "text": "Hacher les oignons. Peler l'ail."}
     
-    recipe_step    = RecipeStep(step_raw_data)    
+    recipe_step    = RecipeStep(step_raw_data.get('type'), step_raw_data.get('text'))
     serialize_data = RecipeStepSerializer(recipe_step).data
     
-    assert step_raw_data["@type"] == serialize_data["@type"]
+    assert step_raw_data["type"] == serialize_data["type"]
     assert step_raw_data["text"] == serialize_data["text"]
     assert step_raw_data == serialize_data
 
