@@ -117,19 +117,32 @@ class GenericWeekGenerator(WeekGeneratorInterface):
         super().__init__()
         
         self.when = when
+        
+        # Be sure that all the day are defined.
+        if set(self.when.keys()) != set(Day.DAYS):
+            raise Exception("Invalid dictionary value, missing day.")
+        
 
-    def generate(self, starting_date: date) -> Week:    
+    def generate(self, starting_date: date) -> Week:
+        """Given a starting date, generate the week template.
+
+        Args:
+            starting_date (date): Starting date.
+
+        Returns:
+            Week: Generated week.
+        """
         days = []
         next_day = starting_date
         
         for _ in range(7):
+            # Get the day name
+            name_of_day = next_day.strftime('%A').lower()
+            
             dishes = []
             
-            day_value = next_day.weekday()
-            day_name  = DayName(day_value)
-            
-            if self.when.get(day_name) is not None:
-                moments = self.when.get(day_name)
+            if self.when.get(name_of_day) is not None:
+                moments = self.when.get(name_of_day)
                 for moment in moments:
                     dishes.append(Meal(moment, ""))
             
@@ -137,9 +150,8 @@ class GenericWeekGenerator(WeekGeneratorInterface):
             next_day = next_day + datetime.timedelta(days=1)
         
         return Week(days)
-            
-        
-            
+    
+
 @DeprecationWarning    
 class DishesofTheWeek:
     """Determine the number of dish we need to have in the week.

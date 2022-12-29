@@ -63,9 +63,9 @@ class Day:
     
     DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     
-    def __init__(self, day_date: date, dishes: List[Meal]) -> None:
-        self.date   = day_date
-        self.dishes = dishes
+    def __init__(self, day_date: date, meals: List[Meal]) -> None:
+        self.date  = day_date
+        self.meals = meals
         
     def get_day_of_the_week(self) -> str:
         """Get day of the week.
@@ -75,18 +75,26 @@ class Day:
         """
         return Day.DAYS[self.date.weekday()]
     
-    def get_dishes(self) -> List[Meal]:
+    def get_meals(self) -> List[Meal]:
         """Get the meals.
 
         Returns:
             List[Meal]: List of the meals.
         """
-        return self.dishes
+        return self.meals
+    
+    def get_date(self) -> date:
+        """Get the date of the day.
+
+        Returns:
+            date: Date of the day.
+        """
+        return self.date
     
     def __str__(self) -> str:
         
         out = f"[{self.date}]\n"
-        for moment in self.dishes:
+        for moment in self.meals:
             out += str(moment) + "\n"
         return out
     
