@@ -19,7 +19,7 @@ class PeriodMealGenerator(metaclass=ABCMeta):
         """
         days = period.get_days()
         for day in days:
-            dishes = day.get_dishes()
+            dishes = day.get_meals()
             for dish in dishes:
                 moment = dish.get_moment()
                 recipe = self.generate_meal(day, moment)
