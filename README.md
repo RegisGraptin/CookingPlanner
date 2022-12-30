@@ -62,6 +62,10 @@ poetry shell
 - Think about the organisation of a web services (backend)
 
 
+- Recipe Storage: Json encoding and decoding is not really good.
+- Recipe source field : Passed it directly in a dictionary and not as a variable ? (serialization issue)
+
+
 
 ## TODO :
 
