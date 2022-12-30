@@ -50,7 +50,11 @@ class RecipeStorage(metaclass=SingletonMeta):
         with open(self.config_path, 'r', encoding="utf-8") as file:
             self.data = json.load(file)
             
-    
+        for index in range(len(self.data['recipes'])):
+            self.data['recipes'][index][1] = Recipe(json.loads(self.data['recipes'][index][1]))
+        
+        
+        
     def get_random(self):
         """TODO
 

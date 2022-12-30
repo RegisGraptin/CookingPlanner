@@ -22,7 +22,10 @@ class Recipe:
         
         self.recipe_cuisine      = recipe_data.get("recipeCuisine", None)
         
-        self.source = source
+        if source is not None and source != "":
+            self.source = source
+        else:
+            self.source = recipe_data.get("source", "")
          
         self.recipe_instructions = []
         for step_data in recipe_data.get("recipeInstructions", []):
@@ -30,6 +33,13 @@ class Recipe:
                 RecipeStep(step_data.get('type'), step_data.get('text'))
             )
             
+    def get_recipe_name(self) -> str:
+        """Get the recipe name.
+
+        Returns:
+            str: Recipe's name.
+        """
+        return self.name
     
     def to_json(self) -> str:
         """Encode object to json.

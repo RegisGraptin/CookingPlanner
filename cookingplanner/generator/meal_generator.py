@@ -1,8 +1,10 @@
 
 from abc import ABCMeta, abstractmethod
 import random
+from typing import List, Tuple
 
-from cookingplanner.generator.meal import Day, Meal, Moment, Period
+from cookingplanner.generator.meal import Day, Meal, Period
+from cookingplanner.recipe.recipe import Recipe
 from cookingplanner.recipe.recipe_storage import RecipeStorage
 
 class PeriodMealGenerator(metaclass=ABCMeta):
@@ -19,23 +21,23 @@ class PeriodMealGenerator(metaclass=ABCMeta):
         """
         days = period.get_days()
         for day in days:
-            dishes = day.get_meals()
-            for dish in dishes:
-                moment = dish.get_moment()
-                recipe = self.generate_meal(day, moment)
-                dish.set_recipe(recipe)
+            
+            # Get the unset meal
+            meals = day.get_meals()
+            for meal in meals:
+                
+                # Generate the meal
+                self.generate_meal(day, meal)
+                
         return period
 
     @abstractmethod
-    def generate_meal(self, day: Day, moment: Moment) -> Meal:
-        """Generate a new meal given a day and a moment.
+    def generate_meal(self, day: Day, meal: Meal):
+        """Generate the meal for the given one.
 
         Args:
             day (Day): Day of the meal.
-            moment (Moment): Moment of the generated meal.
-
-        Returns:
-            Meal: Meal generated.
+            moment (Meal): Meal we want to generate.
         """
 
 
@@ -54,31 +56,29 @@ class UniqueMealStrategy(PeriodMealGenerator):
         if recipe_storage is None:
             recipe_storage = RecipeStorage()
         
-        self.recipes = recipe_storage.get_all_recipes_with_url()
+        self.recipes : List[Tuple[str, Recipe]]= recipe_storage.get_all_recipes_with_url()
         self.recipes_seen = set()
     
-    def generate_meal(self, day: Day, moment: Moment) -> Meal:
-        """Generate a new meal using a unique recipe never seen.
+    
+    def generate_meal(self, day: Day, meal: Meal):
+        """Generate a unique meal given the day.
 
         Args:
-            day (Day): Day of the generation.
-            moment (Moment): Moment of the generation.
-
-        Returns:
-            Meal: Meal generated.
+            day (Day): Day of the generated meal.
+            meal (Meal): Meal we want to generate.
         """
-        print("okx")
         
         # Choose a random recipe
-        chosen_recipe, _ = random.choice(self.recipes)
+        chosen_recipe_url, chosen_recipe = random.choice(self.recipes)
         
-        while chosen_recipe in self.recipes_seen:
-            chosen_recipe, _ = random.choice(self.recipes)
+        while chosen_recipe_url in self.recipes_seen:
+            chosen_recipe_url, chosen_recipe = random.choice(self.recipes)
         
         # Add it to the list of seen
-        self.recipes_seen.add(chosen_recipe)
+        self.recipes_seen.add(chosen_recipe_url)
         
-        return Meal(moment, chosen_recipe)
+        # Set the recipe to the current meal
+        meal.set_recipe(chosen_recipe)
         
     def reset(self):
         """TODO"""

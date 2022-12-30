@@ -44,14 +44,14 @@ def generate_next_week(strategy: str):
     # Generate the template for the next week
     working_week = WorkWeekGenerator().generate(today)
 
-    print(strategy)
-
     if strategy == "unique":
 
-        meal_generator = UniqueMealStrategy()
-        working_week = meal_generator.generate(working_week)
+        print("[*] Process")
 
-        print(working_week)
+        generated_meal_week = UniqueMealStrategy(recipe_storage).generate(working_week)
+        print(generated_meal_week)
+
+    
 
     else:
         print(f"The strategy {strategy} does not exist!")

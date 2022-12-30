@@ -81,10 +81,10 @@ class WorkWeekGenerator(WeekGeneratorInterface):
             dishes = []
             
             # We have a day of work
-            if next_day.weekday() in self.workday:
+            if DayName(next_day.weekday()) in self.workday:
                 for moment in self.workday_moment:
                     dishes.append(Meal(moment, ""))
-            elif next_day.weekday() in self.weekend:
+            elif DayName(next_day.weekday()) in self.weekend:
                 for moment in self.weekend_moment:
                     dishes.append(Meal(moment, ""))
                 
@@ -170,8 +170,6 @@ class DishesofTheWeek:
             for moment in self.week.get(day_of_week).keys():
                 url, _ = self.week.get(day_of_week).get(moment)
                 unique_dishes.add(url)
-                
-        print(unique_dishes)
             
     def extract(self):
         """Extract the total duration time."""

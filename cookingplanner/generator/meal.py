@@ -32,7 +32,10 @@ class Meal:
         self.dish   = recipe
         
     def __str__(self) -> str:
-        return str(self.moment) + " - " + self.dish
+        if self.dish: 
+            return str(self.moment) + " - " + self.dish.get_recipe_name()
+        
+        return str(self.moment) + " - No recipe -"
 
     def get_moment(self) -> Moment:
         """Get the moment.
@@ -94,8 +97,8 @@ class Day:
     def __str__(self) -> str:
         
         out = f"[{self.date}]\n"
-        for moment in self.meals:
-            out += str(moment) + "\n"
+        for meal in self.meals:
+            out += str(meal) + "\n"
         return out
     
 class Period(metaclass=ABCMeta):
