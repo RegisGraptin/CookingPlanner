@@ -16,7 +16,7 @@ recipe_storage = RecipeStorage(config_path="./")
 
 app = FastAPI()
 
-@app.get("generate/{n_pages}", status_code=status.HTTP_201_CREATED)
+@app.get("/generate/{n_pages}", status_code=status.HTTP_201_CREATED)
 def generate_data(n_pages: int = 10):
     """Given a strategy, we extract new recipe from it.
 
@@ -42,7 +42,7 @@ def show_url_recipe():
         print(recipe[0])
 
 
-@app.get("week/work/{strategy}")
+@app.get("/week/work/{strategy}", status_code=status.HTTP_201_CREATED)
 def generate_next_week(strategy: str) -> Week:
     """TODO
     """
