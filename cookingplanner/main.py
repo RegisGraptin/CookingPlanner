@@ -1,9 +1,12 @@
-import argparse
+
 from datetime import date
 
+from fastapi import FastAPI, HTTPException, status
+
+from cookingplanner.generator.meal import Week
 from cookingplanner.generator.meal_generator import UniqueMealStrategy
-from cookingplanner.recipe.recipe_storage import RecipeStorage
 from cookingplanner.generator.week_generator import WorkWeekGenerator
+from cookingplanner.recipe.recipe_storage import RecipeStorage
 from cookingplanner.scraping.scraping import Scraping
 from cookingplanner.scraping.scraping_url import ScrapingURL
 
@@ -11,7 +14,10 @@ SHOW_DATA = True
 
 recipe_storage = RecipeStorage(config_path="./")
 
-def generate_data(n_pages : int = 10):
+app = FastAPI()
+
+@app.get("generate/{n_pages}", status_code=status.HTTP_201_CREATED)
+def generate_data(n_pages: int = 10):
     """Given a strategy, we extract new recipe from it.
 
     Args:
@@ -36,7 +42,8 @@ def show_url_recipe():
         print(recipe[0])
 
 
-def generate_next_week(strategy: str):
+@app.get("week/work/{strategy}")
+def generate_next_week(strategy: str) -> Week:
     """TODO
     """
     today = date.today()
@@ -46,29 +53,7 @@ def generate_next_week(strategy: str):
 
     if strategy == "unique":
 
-        print("[*] Process")
-
         generated_meal_week = UniqueMealStrategy(recipe_storage).generate(working_week)
-        print(generated_meal_week)
+        return generated_meal_week
 
-    
-
-    else:
-        print(f"The strategy {strategy} does not exist!")
-
-if __name__ == "__main__":
-    
-    parser = argparse.ArgumentParser(
-        prog = 'Cooking Planner',
-    )
-    
-    parser.add_argument('--update', action="store_true")
-    parser.add_argument('strategy', action="store", type=str)
-    args = parser.parse_args()
-    
-    if args.update:
-        generate_data()
-        
-    if args.strategy:
-        generate_next_week(args.strategy)
-    
+    raise HTTPException(status_code=404, detail=f"The strategy {strategy} does not exist!")

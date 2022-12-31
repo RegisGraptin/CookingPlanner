@@ -13,6 +13,16 @@ export PYTHONPATH="${PYTHONPATH}:./cookingplanner/"
 poetry run python ./cookingplanner/main.py --update name_of_strategy
 ```
 
+### Run web services 
+
+```bash
+poetry run uvicorn main:app --reload
+```
+
+Swagger 
+
+http://127.0.0.1:8000/docs
+
 ### Parameters
 
 - `--update`: indicates we want to scrap online website for getting recipes.
