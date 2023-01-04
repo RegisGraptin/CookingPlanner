@@ -1,6 +1,11 @@
 
 # Cooking Planner
 
+TODO :: Decompose readme for backend and front end
+TODO :: Here global things
+TODO :: Docker build backend
+
+
 Description: TODO
 Given a week, we want to generate for each dish a recipe. 
 This allow us to organize the shopping list, the dishes, the recipes...

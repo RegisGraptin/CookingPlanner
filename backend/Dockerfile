@@ -1,10 +1,35 @@
 FROM python:3.9
 
-RUN apt-get -y update
-RUN curl -sSL https://install.python-poetry.org | python3 -
-RUN poetry --version
+ENV POETRY_VERSION = 1.1.14
+RUN pip install "poetry==$POETRY_VERSION"
+
+# TODO :: Switch the way we install poerty
+# TODO :: https://stackoverflow.com/questions/53835198/integrating-python-poetry-with-docker
+
+# RUN apt-get -y update
+# RUN curl -sSL https://install.python-poetry.org | python3 -
+
+# RUN poetry --version
+
+# # Project initialization:
+# RUN poetry config virtualenvs.create false \
+#   && poetry install $(test "$YOUR_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
+
+
+
+COPY poetry.lock pyproject.toml /
+
+RUN poetry install
+
 
 WORKDIR /cookingplanner
+COPY ./cookingplanner .
 
-RUN poetry 
 
+WORKDIR /
+COPY ./docker-entrypoint.sh .
+RUN chmod +x 'docker-entrypoint.sh'
+
+EXPOSE 8000
+
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
