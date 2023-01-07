@@ -40,7 +40,27 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios'
   ],
+
+  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
+  axios: {
+    proxy: true,
+  },
+
+  proxy: {
+    '/cookingplanner': {
+      target:
+        process.env.NODE_ENV === 'production'
+          ? 'http://0.0.0.0:8000/' // TODO :: https://backend/ Can be use for docker configuration later on
+          : 'http://0.0.0.0:8000/',
+      pathRewrite: {
+        '^/cookingplanner': '',
+      },
+      changeOrigin: false,
+    },
+  },
+
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
