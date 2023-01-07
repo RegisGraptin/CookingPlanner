@@ -15,12 +15,16 @@ RUN pip install "poetry==$POETRY_VERSION"
 # RUN poetry config virtualenvs.create false \
 #   && poetry install $(test "$YOUR_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
 
+# TODO :: Put the files in a user repository instead of the /
+# TODO :: Clean architecture
+# TODO :: Define also as a parameter the path for the 'recipes.json'. + do the same with other files.
 
 
 COPY poetry.lock pyproject.toml /
 
 RUN poetry install
 
+COPY recipes.json /
 
 WORKDIR /cookingplanner
 COPY ./cookingplanner .

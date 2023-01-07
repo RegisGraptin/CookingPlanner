@@ -13,6 +13,9 @@ def test_generate_work_week_unique_strategy():
     response = client.get("/week/work/unique")
     assert response.status_code == status.HTTP_201_CREATED
     
+    # TODO :: Verify the content of the response
+    # + Each field content should not be empty/None
+    
     # week_generated = response.content
     
     
