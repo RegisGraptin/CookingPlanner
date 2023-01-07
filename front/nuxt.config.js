@@ -40,7 +40,8 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/i18n',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -61,6 +62,26 @@ export default {
     },
   },
 
+
+  i18n: {
+    locales: [
+      {
+        name: 'English',
+        code: 'en',
+        iso: 'en-US',
+        file: 'en-US.js',
+      },
+      {
+        name: 'Français',
+        code: 'fr',
+        iso: 'fr-FR',
+        file: 'fr-FR.js',
+      },
+    ],
+    lazy: true,
+    langDir: 'lang/',
+    defaultLocale: 'fr',
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

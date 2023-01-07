@@ -1,6 +1,9 @@
 <template>
 
   <main>
+
+    <HomeBackground />
+    
     <section>
       <h2>Cooking Planner</h2>
       <p>Presentation</p>
