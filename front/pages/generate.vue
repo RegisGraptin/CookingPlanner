@@ -10,6 +10,27 @@
                 Generate data
             </v-btn>
 
+            <v-container v-if="generated_week">
+                <h2>Generted Week</h2>
+
+                <table>
+
+                    <!-- 
+                        Possible documentation for future implementation
+
+                        - https://vuetifyjs.com/en/components/data-iterators/#filter
+
+
+                    -->
+
+                    <td v-for="day in generated_week.days" :key="day.date">
+                        
+                            {{ day }}
+                        
+                    </td>
+                </table>
+            </v-container>
+
 
     </v-container>
 
@@ -31,6 +52,8 @@ export default {
             this.$log.debug('Generate a new week.')
             let api = new CookingPlannerAPI();
             this.generated_week = await api.generateWeekUnique(this.$axios);
+
+            this.$log.debug(this.generated_week);
         }
     }
 }
