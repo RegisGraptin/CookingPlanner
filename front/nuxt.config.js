@@ -42,6 +42,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/i18n',
+    'nuxt-logger',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -100,6 +101,11 @@ export default {
         }
       }
     }
+  },
+
+  logger: {
+      isEnabled: process.env.NODE_ENV === 'production' ? false : true,
+      logLevel: 'debug', // debug, info, warn or error, defaults to debug
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

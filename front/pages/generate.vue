@@ -28,6 +28,7 @@ export default {
     },
     methods: {
         async generateWeek() {
+            this.$log.debug('Generate a new week.')
             let api = new CookingPlannerAPI();
             this.generated_week = await api.generateWeekUnique(this.$axios);
         }

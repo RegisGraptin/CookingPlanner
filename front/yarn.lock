@@ -5724,6 +5724,11 @@ num2fraction@^1.2.2:
   resolved "https://registry.yarnpkg.com/num2fraction/-/num2fraction-1.2.2.tgz#6f682b6a027a4e9ddfa4564cd2589d1d4e669ede"
   integrity sha512-Y1wZESM7VUThYY+4W+X4ySH2maqcA+p7UR+w8VWNWVAd6lwuXXWz/w/Cz43J/dI2I+PS6wD5N+bJUF+gjWvIqg==
 
+nuxt-logger@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/nuxt-logger/-/nuxt-logger-0.2.0.tgz#60aa0e67918267387b1219c582df563c21c5839e"
+  integrity sha512-0bWt2GLUTCCAuT+ZkpXHW/XtVxuWlMWsKH3AgrT3fG/ZNDKrnV8uPGSIXv0RgVojeWggHbjIk2nVsjn3m2vmcA==
+
 nuxt@^2.15.8:
   version "2.15.8"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-2.15.8.tgz#946cba46bdaaf0e3918aa27fd9ea0fed8ed303b0"
