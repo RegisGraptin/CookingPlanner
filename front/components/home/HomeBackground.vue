@@ -2,6 +2,7 @@
     <!-- Presentation -->
     <div class="presentation_background">
         <div class="presentation_gradient_colors">
+            <v-container>
             <header id="logo">
                 <h1>Cooking Planner</h1>
             </header>
@@ -14,8 +15,15 @@
                     <p>first title description</p>
                     <p>Call back email</p>
 
+                    <p>
+                        <NuxtLink to="/generate">
+                            Generate your next week
+                        </NuxtLink>
+                    </p>
+
                 </div>
             </div>
+        </v-container>
         </div>
 
         <div class="background-svg-transition">

@@ -1,7 +1,7 @@
 <template>
-    <main>
 
-        <section>
+    <v-container tag="section" lg>
+
             <h2>Week generated</h2>
 
             <p>blabla</p>
@@ -11,9 +11,8 @@
             </v-btn>
 
 
-        </section>
+    </v-container>
 
-    </main>
 </template>
 
 <script>
@@ -22,14 +21,15 @@ import { CookingPlannerAPI } from '~/api/cooking_planner';
 
 export default {
     name: 'Generate',
+    data() {
+        return {
+            generated_week: null
+        }
+    },
     methods: {
         async generateWeek() {
-            console.log("Generate a new week process")
-
             let api = new CookingPlannerAPI();
-            let generated_week = await api.generateWeekUnique(this.$axios);
-            console.log("Generated week")
-            console.log(generated_week)
+            this.generated_week = await api.generateWeekUnique(this.$axios);
         }
     }
 }

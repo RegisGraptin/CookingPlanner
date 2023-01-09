@@ -1,6 +1,6 @@
 <template>
 
-  <main>
+  <div>
 
     <HomeBackground />
     
@@ -19,7 +19,9 @@
       </NuxtLink>
 
     </section>
-  </main>
+
+  </div>
+
 </template>
 
 <script>
