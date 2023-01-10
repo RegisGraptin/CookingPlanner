@@ -12,23 +12,9 @@
 
             <v-container v-if="generated_week">
                 <h2>Generted Week</h2>
+                
+                <DisplayWeek :week="generated_week"></DisplayWeek>
 
-                <table>
-
-                    <!-- 
-                        Possible documentation for future implementation
-
-                        - https://vuetifyjs.com/en/components/data-iterators/#filter
-
-
-                    -->
-
-                    <td v-for="day in generated_week.days" :key="day.date">
-                        
-                            {{ day }}
-                        
-                    </td>
-                </table>
             </v-container>
 
 
@@ -39,22 +25,21 @@
 <script>
 
 import { CookingPlannerAPI } from '~/api/cooking_planner';
+import DisplayWeek from '~/components/planning/DisplayWeek.vue';
 
 export default {
-    name: 'Generate',
-    data() {
-        return {
-            generated_week: null
-        }
-    },
+    name: "Generate",
+    data: () => ({
+        generated_week: null
+    }),
     methods: {
         async generateWeek() {
-            this.$log.debug('Generate a new week.')
+            this.$log.debug("Generate a new week.");
             let api = new CookingPlannerAPI();
             this.generated_week = await api.generateWeekUnique(this.$axios);
-
             this.$log.debug(this.generated_week);
         }
-    }
+    },
+    components: { DisplayWeek }
 }
 </script>
