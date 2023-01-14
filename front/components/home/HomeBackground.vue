@@ -1,7 +1,7 @@
 <template>
-    <!-- Presentation -->
+
     <div class="presentation_background">
-        <div class="presentation_gradient_colors">
+        <div class="">
             <v-container>
             <header id="logo">
                 <h1>Cooking Planner</h1>
@@ -26,25 +26,28 @@
         </v-container>
         </div>
 
-        <div class="background-svg-transition">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path fill="#F3F5F7" fill-opacity="1"
-                    d="M0,160L40,165.3C80,171,160,181,240,197.3C320,213,400,235,480,240C560,245,640,235,720,218.7C800,203,880,181,960,186.7C1040,192,1120,224,1200,213.3C1280,203,1360,149,1400,122.7L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z">
-                </path>
-            </svg>
-        </div>
     </div>
 </template>
 
 <style>
 
 .presentation_background {
-    min-height: 850px;
-    height: 100vh;
-    width: 100%;
-    background: url("~assets/images/home/background.jpg") no-repeat center center;
-    background-size: cover;
-    position: relative;
+    height: 500px;
+    background-color: #FEBD2E;
+    
+
+    margin-left:  7px;
+    margin-right: 7px;
+    margin-top:   7px;
+
+    border-radius: 30px;
+
+    /* min-height: 850px; */
+    /* height: 100vh; */
+    
+    /* background: url("~assets/images/home/background.jpg") no-repeat center center; */
+    /* background-size: cover; */
+    /* position: relative; */
 }
 
 .presentation_gradient_colors {
