@@ -53,11 +53,11 @@
     /* // background: rgba(2, 0, 36, 0.6); */
     background-image: linear-gradient(
         to right bottom, 
-        rgba(3,0,61,0.9), 
-        rgba(24,20,87,0.8), 
-        rgba(49,36,113,0.7), 
-        rgba(73,53,141,0.8), 
-        rgba(98,71,170,0.9)
+        rgba(3,0,61,0.4), 
+        rgba(24,20,87,0.5), 
+        rgba(49,36,113,0.5), 
+        rgba(73,53,141,0.5), 
+        rgba(98,71,170,0.5)
     );
     color: white;
 }
