@@ -27,4 +27,8 @@ main {
   color: #333333;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 </style>
