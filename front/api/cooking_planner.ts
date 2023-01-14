@@ -27,7 +27,7 @@ class CookingPlannerAPI {
         
         return week_generated;
     }
-    
+   
 }
 
 

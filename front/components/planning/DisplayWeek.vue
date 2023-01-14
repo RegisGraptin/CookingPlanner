@@ -10,15 +10,19 @@
                         <h3 class="text-center">{{ getDateInformation(day.date) }}</h3>
                     </v-card-title>
 
+                    <v-card-text class="font-weight-bold" v-for="meal in day.meals.sort((a, b) => a.moment - b.moment)" :key="meal">
 
-                    
-
-                    <v-card-text class="font-weight-bold" v-for="meal in day.meals" :key="meal">
-                        {{ meal }}
-
-                        <div>
-                            {{ meal.dish.name }}
-                        </div>
+                        <v-card class="title">
+                            <v-card-title>
+                                <span>{{ meal.dish.name }}</span>
+                            </v-card-title>
+                            <v-card-text>
+                                <p>Moment: {{ meal.moment }}</p>
+                                <p>Duration: {{ meal.dish.duration }}</p>
+                                <a href="#">Recette</a>
+                            </v-card-text>
+                            
+                        </v-card>
 
                     </v-card-text>
 
@@ -34,11 +38,13 @@
 section.calendar {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-around;
 }
 
 article.calendar-day {
     width: 300px;
+    height: 700px;
+    margin-right: 10px;
 }
 
 h3.text-center {
