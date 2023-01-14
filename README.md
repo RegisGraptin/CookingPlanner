@@ -1,6 +1,51 @@
 
 # Cooking Planner
 
+## Besoin ?
+
+- Qu'est ce que je vais manger durant la semaine ?
+
+=> Préparer mes recettes en avance de la semaine (recette + course)
+=> Organisation des personnes
+=> Possibilité d'innover dans leur choix
+
+[] Choix -> Ne souhaite pas commander en ligne / Aller au restaurant
+=> Trop chère / Contrôler le budget
+=> Manger seinement
+=> Possibilité de cuisiner
+=> Contrainte de temps => Préparer en avance pour être rapide 
+=> Pas de possibilité de cuisiner en dehors de chez soi
+
+
+## Questions
+
+-> Qu'est ce que je peux me faire à manger ?
+-> Quels recettes de cuisines je souhaite faire pour une semaine ?
+-> Quels ingrédients j'ai besoin pour créer mes recettes ?
+-> Quels est le temps que je suis prêt à allouer pour ces recettes ?
+-> Est-ce que je dois préparer des repas pour le travail ?
+-> Quel nouveau plat je souhaite essayer ? 
+-> Organiser & utiliser les restes d'autres repas.
+...
+
+La cuisine doit être fun et non une contrainte
+=> Changer l'image de la cuisine et manger correctement
+Agréable et bon
+
+
+## Solution 
+
+- Création d'une liste de recette pour une semaine.
+- Contrainte sur le nombre de repas.
+- Contrainte sur l'usage des restes possibles / Préparation des repas en grande quantité
+- Contrainte sur le temps de préparation.
+- Contrainte sur le budget.
+
+
+
+
+
+
 TODO :: Decompose readme for backend and front end
 TODO :: Here global things
 TODO :: Docker build backend
