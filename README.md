@@ -70,6 +70,13 @@ poetry run pytest --cov
 poetry shell
 
 
+# Concurence
+
+- Analyse the concurrency
+        - https://jow.fr/
+        - https://whisk.com/
+        - Restover
+
 ## TODO: 
 
 - Have a precise naming for each class. (Structuration of the project + diagram)
