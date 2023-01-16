@@ -1,8 +1,7 @@
 <template>
 
     <div class="presentation_background">
-        <div class="">
-            <v-container>
+            <div class="container max-height relative">
 
             <header id="logo">
 
@@ -30,26 +29,30 @@
             </header>
 
             <section class="presentation_content">
+
+                <article>
+                    <h1 class="landing-title">
+                        Cooking<br/>
+                        <span class="shift-name">Planner</span>
+                    </h1>
+
+                    <p>La nouvelle application qui te permet d'organiser tes repas de la semaine.</p>
+                    <p>Envie de varier ?</p>
+
+                    <p>
+                        <NuxtLink to="/generate">
+                            Essayer maintenant
+                        </NuxtLink>
+                    </p>
+                </article>
             
-                <h1 class="landing-title">
-                    Cooking<br/>
-                    <span class="shift-name">Planner</span>
-                </h1>
-
-                <p>The new way to organize your cooking week.</p>
-                <p>Help you to organize your week</p>
-
-                <p>
-                    <NuxtLink to="/generate">
-                        Generate your next week
-                    </NuxtLink>
-                </p>
+                <article class="absolute bottom-0 right-0">
+                    <img class="object-right-bottom" src="@/assets/images/home/mama.svg" alt="Cooking person" width="300px"/>
+                </article>
 
             </section>
         
-        </v-container>
         </div>
-
     </div>
 </template>
 
@@ -109,6 +112,25 @@ h1.landing-title > .shift-name {
 
 .presentation_content {
     padding-top: 50px;
+}
+
+.max-height {
+    height: 100%;
+    padding-bottom: 0;
+}
+
+.image-bottom-right {
+    position: relative;
+    height: 100%;
+}
+
+.image-bottom-right > img {
+    height: auto;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    /* right: 0;
+    bottom: 0; */
 }
 
 
