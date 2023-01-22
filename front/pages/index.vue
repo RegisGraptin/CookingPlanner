@@ -6,6 +6,8 @@
     
     <HomeFeatures />
 
+    <HomeContact />
+
     <section>
       <h2>Cooking Planner</h2>
       <p>Presentation</p>
@@ -21,6 +23,7 @@
       </NuxtLink>
 
     </section>
+
 
   </div>
 
