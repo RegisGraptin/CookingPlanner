@@ -5,15 +5,19 @@
         <Nuxt />
     </v-main>
     
-    <v-footer>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    <Footer />
   </v-app>
 </template>
 
 <script>
+
+import Footer from '../components/page/Footer.vue';
+
 export default {
   name: 'DefaultLayout',
+  components: {
+    Footer,
+  },
   data () {
     return {}
   }
