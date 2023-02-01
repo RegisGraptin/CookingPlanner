@@ -8,6 +8,8 @@ $ yarn install
 
 # serve with hot reload at localhost:3000
 $ yarn dev
+# If some issues
+$ NODE_OPTIONS=--openssl-legacy-provider yarn dev
 
 # build for production and launch server
 $ yarn build
