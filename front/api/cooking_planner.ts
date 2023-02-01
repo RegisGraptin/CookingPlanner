@@ -22,7 +22,7 @@ class CookingPlannerAPI {
                 week_generated = Object.assign({}, data)
             })
             .catch((err: any) => {
-                console.log(err);
+                throw new Error(err);
             })
         
         return week_generated;

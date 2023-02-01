@@ -46,6 +46,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/i18n',
     'nuxt-logger',
+    ['nuxt-tailvue', {all: true}],   // https://github.com/acidjazz/nuxt-tailvue
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
