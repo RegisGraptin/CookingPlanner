@@ -16,6 +16,8 @@ uvicorn = {extras = ["standard"], version = "^0.20.0"}
 httpx = "^0.23.1"
 pyenchant = "^3.2.2"
 pytest = "^7.2.1"
+fastapi-login = "^1.8.3"
+python-multipart = "^0.0.5"
 
 [tool.poetry.dev-dependencies]
 
