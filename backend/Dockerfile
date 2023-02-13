@@ -1,6 +1,6 @@
 FROM python:3.9
 
-ENV POETRY_VERSION = 1.1.14
+ENV POETRY_VERSION = 1.3.2
 RUN pip install "poetry==$POETRY_VERSION"
 
 # TODO :: Switch the way we install poerty
