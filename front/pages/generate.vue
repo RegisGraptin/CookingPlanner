@@ -2,18 +2,19 @@
 
     <v-container tag="section" lg>
 
-        <h2>Week generated</h2>
-
-        <p>blabla</p>
-
-        <v-btn large @click="generateWeek">
-            Generate data
-        </v-btn>
-
         <v-container v-if="generated_week">
-            <h2>Generted Week</h2>
+            <h2>Generated Week</h2>
 
             <DisplayWeek :week="generated_week"></DisplayWeek>
+
+        </v-container>
+
+        <v-container v-else>
+            <h2>Generate a new week</h2>
+
+            <v-btn large @click="generateWeek">
+                Generate data
+            </v-btn>
 
         </v-container>
 
@@ -38,7 +39,7 @@ export default {
             let api = new CookingPlannerAPI();
 
             api.generateWeekUnique(this.$axios).then((week) => {
-                this.generateWeek = week;
+                this.generated_week = week;
                 this.$log.debug(this.generated_week);
             }).catch((err) => {
                 // Set the log for the error
