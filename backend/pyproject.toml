@@ -18,6 +18,9 @@ pyenchant = "^3.2.2"
 pytest = "^7.2.1"
 fastapi-login = "^1.8.3"
 python-multipart = "^0.0.5"
+sqlalchemy = "^2.0.3"
+python-dotenv = "^0.21.1"
+pytest-env = "^0.8.1"
 
 [tool.poetry.dev-dependencies]
 

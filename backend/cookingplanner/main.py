@@ -3,23 +3,27 @@ from datetime import date
 
 from fastapi import FastAPI, HTTPException, status
 
+from cookingplanner.config import Config
 from cookingplanner.generator.meal import Week
 from cookingplanner.generator.meal_generator import UniqueMealStrategy
 from cookingplanner.generator.week_generator import WorkWeekGenerator
+from cookingplanner.models.database import Database
 from cookingplanner.recipe.recipe_storage import RecipeStorage
 from cookingplanner.scraping.scraping import Scraping
 from cookingplanner.scraping.scraping_url import ScrapingURL
 
 from cookingplanner.routers.auth import router as router_auth
 
-SHOW_DATA = True
 
+# Load the configuration, database and storage
+Config()
+Database()
 
 recipe_storage = RecipeStorage(config_path="./")
 
 app = FastAPI()
 
-app.include_router(router_auth)
+app.include_router(router_auth, prefix="/auth")
 
 @app.get("/generate/{n_pages}", status_code=status.HTTP_201_CREATED)
 def generate_data(n_pages: int = 10):
@@ -62,3 +66,25 @@ def generate_next_week(strategy: str) -> Week:
         return generated_meal_week
 
     raise HTTPException(status_code=404, detail=f"The strategy {strategy} does not exist!")
+
+
+
+from fastapi.openapi.utils import get_openapi
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title="Custom title",
+        version="2.5.0",
+        description="This is a very custom OpenAPI schema",
+        routes=app.routes,
+    )
+    openapi_schema["info"]["x-logo"] = {
+        "url": "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png"
+    }
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
+
