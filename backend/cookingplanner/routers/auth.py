@@ -18,6 +18,12 @@ from cookingplanner.models import database, schema
 
 router = APIRouter()
 
+
+# Create Database Schema
+schema.Base.metadata.create_all(bind=database.Database().engine)
+
+
+
 # TODO :: Change it and set it in a .env variable
 SECRET = os.environ.get("SECRET_KEY", None)
 
@@ -25,19 +31,6 @@ if SECRET is None:
     raise ValueError("SECRET_KEY value is not defined. Please defined it in your .env file.")
 
 manager = LoginManager(SECRET, '/login')
-
-# TODO :: To update it and use a User object and database
-DB = {
-    'users': {
-        "johndoe": {
-            "username": "johndoe",
-            "full_name": "John Doe",
-            "email": "johndoe@example.com",
-            "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-            "disabled": False,
-        }
-    }
-}
 
 # Dependency
 def get_db():
@@ -49,7 +42,6 @@ def get_db():
 
 
 
-schema.Base.metadata.create_all(bind=database.Database().engine)
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -60,21 +52,13 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
-@manager.user_loader()
-def query_user(user_id: str):
-    """
-    Get a user from the db
-    :param user_id: E-Mail of the user
-    :return: None or the user object
-    """
-    return DB['users'].get(user_id)
-
-
 from pydantic import BaseModel
 
 class UserRegister(BaseModel):
     email: str
     password: str
+
+
 
 @router.post('/register', status_code=status.HTTP_201_CREATED)
 def register(data: UserRegister, db: Session = Depends(get_db)):
@@ -82,10 +66,9 @@ def register(data: UserRegister, db: Session = Depends(get_db)):
     email = data.email
     password = data.password
 
-
-    # Check email not present
-    user = query_user(email)
-    if user:
+    # Check user not existing for the given email
+    existing_user = db.query(User).filter(User.email == email).first()
+    if existing_user:
         raise InvalidCredentialsException
     
     # Hash password
@@ -102,11 +85,11 @@ def register(data: UserRegister, db: Session = Depends(get_db)):
 
 
 @router.post('/login')  # /auth/token
-def login(data: OAuth2PasswordRequestForm = Depends()):
+def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     email = data.username
     password = data.password
 
-    user = query_user(email)
+    user = db.query(User).filter(User.email == email).first()
     if not user:
         # you can return any response or error of your choice
         raise InvalidCredentialsException
