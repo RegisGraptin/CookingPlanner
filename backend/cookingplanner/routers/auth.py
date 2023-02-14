@@ -19,11 +19,6 @@ from cookingplanner.models import database, schema
 router = APIRouter()
 
 
-# Create Database Schema
-schema.Base.metadata.create_all(bind=database.Database().engine)
-
-
-
 # TODO :: Change it and set it in a .env variable
 SECRET = os.environ.get("SECRET_KEY", None)
 

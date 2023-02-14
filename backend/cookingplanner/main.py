@@ -17,7 +17,9 @@ from cookingplanner.routers.auth import router as router_auth
 
 # Load the configuration, database and storage
 Config()
-Database()
+
+database = Database()
+database.generate()
 
 recipe_storage = RecipeStorage(config_path="./")
 

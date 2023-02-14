@@ -41,3 +41,8 @@ class Database(metaclass=SingletonMeta):
         Session = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
 
         return Session()
+
+    def generate(self):
+
+        # Create Database Schema
+        self.Base.metadata.create_all(bind=self.engine)
