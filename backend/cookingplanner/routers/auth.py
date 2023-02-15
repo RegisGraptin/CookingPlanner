@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from passlib.context import CryptContext
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
 from fastapi_login import LoginManager
@@ -54,6 +54,17 @@ class UserRegister(BaseModel):
     password: str
 
 
+class UserBase(BaseModel):
+    email: str
+
+
+EmailAlreadyExistsException = HTTPException(
+    status_code=status.HTTP_409_CONFLICT,
+    detail="Email already exists.",
+    headers={"WWW-Authenticate": "Bearer"}
+)
+
+
 
 @router.post('/register', status_code=status.HTTP_201_CREATED)
 def register(data: UserRegister, db: Session = Depends(get_db)):
@@ -64,7 +75,7 @@ def register(data: UserRegister, db: Session = Depends(get_db)):
     # Check user not existing for the given email
     existing_user = db.query(User).filter(User.email == email).first()
     if existing_user:
-        raise InvalidCredentialsException
+        raise EmailAlreadyExistsException
     
     # Hash password
     hashed_password = get_password_hash(password)
@@ -76,7 +87,7 @@ def register(data: UserRegister, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_user)
 
-    return db_user
+    return UserBase(email=db_user.email)
 
 
 @router.post('/login')  # /auth/token

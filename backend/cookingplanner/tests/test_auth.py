@@ -14,6 +14,11 @@ fake_account = {
     "password": 'fakepassword',
 }
 
+fake_account_2 = {
+    "email":    'fake2@example.com',
+    "password": 'fakepassword',
+}
+
 @pytest.fixture(autouse=True)
 def cleanup_files():
     """The database will automatically be created at the start of the script.
@@ -30,14 +35,42 @@ def cleanup_files():
 
 def test_auth_create_account():
 
+    # Create a new account
     response = client.post(
         '/auth/register', 
         content=json.dumps(fake_account),
     )
 
-    print(response)
+    assert response.status_code == status.HTTP_201_CREATED
+
+    content = json.loads(response.content)
+
+    assert content.get('email')          == fake_account.get('email')
+    assert content.get('password', None) == None
+    assert len(content.keys())           == 1
+
+    # Try to create another account with the same email
+    response = client.post(
+        '/auth/register', 
+        content=json.dumps(fake_account),
+    )
+    assert response.status_code == status.HTTP_409_CONFLICT
+
+
+    # Create another account with a new email
+    response = client.post(
+        '/auth/register', 
+        content=json.dumps(fake_account_2),
+    )
 
     assert response.status_code == status.HTTP_201_CREATED
+
+    content = json.loads(response.content)
+
+    assert content.get('email')          == fake_account_2.get('email')
+    assert content.get('password', None) == None
+    assert len(content.keys())           == 1
+
     
 
 def test_auth_login_account():
