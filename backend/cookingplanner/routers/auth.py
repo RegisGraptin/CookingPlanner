@@ -47,11 +47,11 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class UserRegister(BaseModel):
-    email: str
-    password: str
+    email: str = Field()
+    password: str = Field()
 
 
 class UserBase(BaseModel):
@@ -64,22 +64,35 @@ EmailAlreadyExistsException = HTTPException(
     headers={"WWW-Authenticate": "Bearer"}
 )
 
-
-
 @router.post('/register', status_code=status.HTTP_201_CREATED)
-def register(data: UserRegister, db: Session = Depends(get_db)):
+def register(data: UserRegister, db: Session = Depends(get_db)) -> UserBase:
+    """Register a new user.
+
+    Args:
+        data (UserRegister): New user information.
+        db (Session, optional): Database session. Defaults to Depends(get_db).
+
+    Raises:
+        EmailAlreadyExistsException: Account already exists with this email
+
+    Returns:
+        UserBase: Public user account information.
+    """
     
-    email = data.email
+    # TODO :: Check the type of email + validity of the mail (length...)
+    # TODO :: Check the password complexity
+
+    # Get the data
+    email    = data.email
     password = data.password
 
-    # Check user not existing for the given email
+    # Check that the user is not existing for the given email
     existing_user = db.query(User).filter(User.email == email).first()
     if existing_user:
         raise EmailAlreadyExistsException
     
     # Hash password
     hashed_password = get_password_hash(password)
-
 
     # Create new user
     db_user  = User(email=email, hashed_password=hashed_password)
@@ -90,7 +103,7 @@ def register(data: UserRegister, db: Session = Depends(get_db)):
     return UserBase(email=db_user.email)
 
 
-@router.post('/login')  # /auth/token
+@router.post('/token')  # /auth/token
 def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     email = data.username
     password = data.password

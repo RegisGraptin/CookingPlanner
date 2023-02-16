@@ -10,6 +10,11 @@ sudo docker run -p 8000:8000 2b71b2c4c3a5
 
 sudo docker exec -it 2b71b2c4c3a5 bash
 
+# Testing 
+
+Production or Testing more are present in our script in order to load the corresponding database.
+
+
 
 
 # URLs 
