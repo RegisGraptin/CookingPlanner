@@ -44,20 +44,6 @@ def cleanup_files():
 
 
 
-def test_non_existing_auth_login():
-    """Try to login with a non existing account."""
-
-    response = client.post(
-        '/auth/token', 
-        data={
-            "username": fake_account.get('email'), 
-            "password": fake_account.get('password'),
-        },
-    )
-
-    assert response.status_code == status.HTTP_401_UNAUTHORIZED
-
-
 def test_auth_create_account():
     """Test the account creation request with an email and a password."""
 
@@ -89,7 +75,35 @@ def test_auth_create_account():
     assert content.get('password', None) == None
     assert len(content.keys())           == 1
 
+
+@pytest.mark.parametrize("email, password", [
+    ("invalid_email", "password"),
+    ("valid@email.com", ""),
+    ("v@test_com", "random_password"),
+    ("v@test", "random_password"),
+    ("v-test@.com", "random_password"),
+    ("valid@email.com", "short"),
+    ("valid@email.com", "shor12-"),
+])
+def test_auth_register_with_invalid_fields(email: str, password: str):
+    """Test to create a new account with invalid fields
+
+    Args:
+        email (str): Testing email address.
+        password (str): Testing password.
+    """
     
+    # Try to create a new user account
+    response = client.post(
+        '/auth/register', 
+        content=json.dumps({
+            "email"   : email,
+            "password": password
+        }),
+    )
+
+    assert response.status_code != status.HTTP_201_CREATED
+
 
 def test_auth_login_account():
     """Get authentication tokens by logging in the user"""
@@ -111,6 +125,19 @@ def test_auth_login_account():
     )
 
     assert response.status_code == status.HTTP_200_OK
+
+def test_auth_login_with_non_existing_account():
+    """Try to login with a non existing account."""
+
+    response = client.post(
+        '/auth/token', 
+        data={
+            "username": fake_account.get('email'), 
+            "password": fake_account.get('password'),
+        },
+    )
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
 def test_auth_create_existing_account():

@@ -47,11 +47,17 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field
 
-class UserRegister(BaseModel):
-    email: str = Field()
-    password: str = Field()
+class UserRegisterModel(BaseModel):
+    """User registration model.
+
+    Two fields are needed to register: 
+    - email : email address of the user.
+    - password : password of the user.
+    """
+    email    : EmailStr = Field()
+    password : str   = Field(min_length=8)
 
 
 class UserBase(BaseModel):
@@ -65,7 +71,7 @@ EmailAlreadyExistsException = HTTPException(
 )
 
 @router.post('/register', status_code=status.HTTP_201_CREATED)
-def register(data: UserRegister, db: Session = Depends(get_db)) -> UserBase:
+def register(data: UserRegisterModel, db: Session = Depends(get_db)) -> UserBase:
     """Register a new user.
 
     Args:
@@ -79,9 +85,6 @@ def register(data: UserRegister, db: Session = Depends(get_db)) -> UserBase:
         UserBase: Public user account information.
     """
     
-    # TODO :: Check the type of email + validity of the mail (length...)
-    # TODO :: Check the password complexity
-
     # Get the data
     email    = data.email
     password = data.password
