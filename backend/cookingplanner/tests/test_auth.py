@@ -1,4 +1,4 @@
-import os
+import time
 import pytest
 import json
 
@@ -26,22 +26,9 @@ def cleanup_files():
 
     We simply need to delete the test database at the end.
     """
-
     Database().generate()
-
     yield None
-
     Database().Base().metadata.drop_all(bind=Database().engine)
-
-
-# @pytest.mark.parametrize('url, status_code', [
-#   ('https://example.com/api/v1/endpoint', 200),
-#   ('https://example.com/api/v1/invalid_endpoint', 404),
-# ])
-# def test_post_request_status_code(url, status_code):
-#     response = requests.post(url)
-#     assert response.status_code == status_code
-
 
 
 def test_auth_create_account():
@@ -75,7 +62,6 @@ def test_auth_create_account():
     assert content.get('password', None) == None
     assert len(content.keys())           == 1
 
-
 @pytest.mark.parametrize("email, password", [
     ("invalid_email", "password"),
     ("valid@email.com", ""),
@@ -104,7 +90,6 @@ def test_auth_register_with_invalid_fields(email: str, password: str):
 
     assert response.status_code != status.HTTP_201_CREATED
 
-
 def test_auth_login_account():
     """Get authentication tokens by logging in the user"""
 
@@ -126,6 +111,15 @@ def test_auth_login_account():
 
     assert response.status_code == status.HTTP_200_OK
 
+    # Get the access token
+    data = json.loads(response.content)
+
+    assert data.get("access_token") is not None
+    assert data.get("token_type")   is not None
+    assert data.get("token_type") == "bearer"
+    assert len(data.get("access_token")) > 50
+
+
 def test_auth_login_with_non_existing_account():
     """Try to login with a non existing account."""
 
@@ -139,6 +133,26 @@ def test_auth_login_with_non_existing_account():
 
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
+def test_auth_login_wrong_password():
+    """Try to login with a wrong password"""
+
+    # Create a new account
+    client.post(
+        '/auth/register', 
+        content=json.dumps(fake_account),
+    )
+
+    # Login the user
+    access_response = client.post(
+        '/auth/token',
+        data={
+            "username": fake_account.get('email'), 
+            "password": fake_account.get('password') + "_error",
+        },
+        
+    )
+
+    assert access_response.status_code == status.HTTP_401_UNAUTHORIZED
 
 def test_auth_create_existing_account():
     """Verify that we cannot create a new account with the same email address."""
@@ -158,9 +172,104 @@ def test_auth_create_existing_account():
     )
     assert response.status_code == status.HTTP_409_CONFLICT
 
-
-def test_auth_invalid_fields():
-    pass
-
 def test_auth_get_user_account_info():
-    pass
+    """Create a new user account, login and get the user information"""
+    
+    # Create a new account
+    client.post(
+        '/auth/register', 
+        content=json.dumps(fake_account),
+    )
+
+    # Login the user
+    access_response = client.post(
+        '/auth/token',
+        data={
+            "username": fake_account.get('email'), 
+            "password": fake_account.get('password'),
+        },
+        
+    )
+
+    data = json.loads(access_response.content)
+    
+    token = data.get('access_token')
+
+    headers = {"Authorization": f"Bearer {token}"}
+
+    # Get user information
+    response = client.get(
+        '/auth/user',
+        headers = headers
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+
+    user = json.loads(response.content)
+    
+    assert user is not None
+    assert user.get('email') == "fake@example.com"
+    assert user.get('hashed_password') is None
+
+def test_auth_double_login_token_validity():
+    """Check that the token changed when we login a new time.
+    And check that we can login with both token as the access token should not change between the two requests.
+    """
+    
+    # Create a new account
+    client.post(
+        '/auth/register', 
+        content=json.dumps(fake_account),
+    )
+
+    # Login the user
+    access_response = client.post(
+        '/auth/token',
+        data={
+            "username": fake_account.get('email'), 
+            "password": fake_account.get('password'),
+        },   
+    )
+
+    # Wait a second to force the change of the other auth token
+    time.sleep(1)
+
+    data = json.loads(access_response.content)
+    first_token = data.get('access_token')
+
+
+    # Login the user
+    access_response_2 = client.post(
+        '/auth/token',
+        data={
+            "username": fake_account.get('email'), 
+            "password": fake_account.get('password'),
+        },   
+    )
+
+    data = json.loads(access_response_2.content)
+    second_token = data.get('access_token')
+
+    assert first_token != second_token
+
+    
+    headers = {"Authorization": f"Bearer {first_token}"}
+
+    # Get user information
+    response = client.get(
+        '/auth/user',
+        headers = headers
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+
+
+    headers = {"Authorization": f"Bearer {second_token}"}
+
+    # Get user information
+    response = client.get(
+        '/auth/user',
+        headers = headers
+    )
+
+    assert response.status_code == status.HTTP_200_OK

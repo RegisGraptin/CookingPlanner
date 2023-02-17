@@ -1,31 +1,28 @@
 
 import os
 
-from sqlalchemy.orm import Session
-
-from passlib.context import CryptContext
-
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-
 from fastapi_login import LoginManager
 from fastapi_login.exceptions import InvalidCredentialsException
+from passlib.context import CryptContext
+from pydantic import BaseModel, EmailStr, Field
+from sqlalchemy.orm import Session
 
+from cookingplanner.models import database
 from cookingplanner.models.schema import User
-
-from cookingplanner.models import database, schema
-
 
 router = APIRouter()
 
 
-# TODO :: Change it and set it in a .env variable
 SECRET = os.environ.get("SECRET_KEY", None)
 
 if SECRET is None:
     raise ValueError("SECRET_KEY value is not defined. Please defined it in your .env file.")
 
-manager = LoginManager(SECRET, '/login')
+manager = LoginManager(SECRET, '/token')
+
+database.Database()
 
 # Dependency
 def get_db():
@@ -47,7 +44,7 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
-from pydantic import BaseModel, EmailStr, Field
+
 
 class UserRegisterModel(BaseModel):
     """User registration model.
@@ -60,7 +57,8 @@ class UserRegisterModel(BaseModel):
     password : str   = Field(min_length=8)
 
 
-class UserBase(BaseModel):
+class UserModel(BaseModel):
+    """User model information."""
     email: str
 
 
@@ -70,8 +68,31 @@ EmailAlreadyExistsException = HTTPException(
     headers={"WWW-Authenticate": "Bearer"}
 )
 
+@manager.user_loader()
+def get_user(email: str) -> User:
+    """Get the user for the given request.
+
+    Called by the login manager.
+
+    Args:
+        email (str): email of the user.
+
+    Returns:
+        User: Corresponding user.
+    """
+    # Create a database session
+    db = database.Database().get_session()
+
+    user = db.query(User).filter(User.email == email).first()
+
+    db.close()
+
+    return user
+    
+
+
 @router.post('/register', status_code=status.HTTP_201_CREATED)
-def register(data: UserRegisterModel, db: Session = Depends(get_db)) -> UserBase:
+def register(data: UserRegisterModel, db: Session = Depends(get_db)) -> UserModel:
     """Register a new user.
 
     Args:
@@ -84,7 +105,7 @@ def register(data: UserRegisterModel, db: Session = Depends(get_db)) -> UserBase
     Returns:
         UserBase: Public user account information.
     """
-    
+
     # Get the data
     email    = data.email
     password = data.password
@@ -103,31 +124,50 @@ def register(data: UserRegisterModel, db: Session = Depends(get_db)) -> UserBase
     db.commit()
     db.refresh(db_user)
 
-    return UserBase(email=db_user.email)
+    return UserModel(email=db_user.email)
 
 
-@router.post('/token')  # /auth/token
+@router.post('/token')
 def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    email = data.username
+    """Login the user.
+
+    Args:
+        data (OAuth2PasswordRequestForm, optional): User information. Defaults to Depends().
+        db (Session, optional): Database session. Defaults to Depends(get_db).
+
+    Raises:
+        InvalidCredentialsException: The user do not exists in the database
+        InvalidCredentialsException: The user's password is not valid
+
+    Returns:
+        dict: Access token
+    """
+    email    = data.username
     password = data.password
 
+    # Get the user from the database
     user = db.query(User).filter(User.email == email).first()
+    
+    # The user does not exist in the database
     if not user:
-        # you can return any response or error of your choice
         raise InvalidCredentialsException
+    
+    # The user's password does not match with the stored password
     if not verify_password(password, user.hashed_password):
         raise InvalidCredentialsException
 
+    # Create the access token
     access_token = manager.create_access_token(
         data={'sub': email}
     )
+    
     return {'access_token': access_token, 'token_type': 'bearer'}
 
 
 @router.get('/user')
-def user(user=Depends(manager)):
+def user(user = Depends(manager)):
     """
     Need token in the `Authorization` as follow:
     Bearer <token>
     """
-    return {'user': user}
+    return UserModel(email=user.email)

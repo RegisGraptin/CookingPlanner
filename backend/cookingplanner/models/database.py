@@ -33,10 +33,6 @@ class Database(metaclass=SingletonMeta):
         
         self.Base = declarative_base()
     
-    def Base(self):
-        return self.Base
-
-
     def get_session(self):
         Session = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
 
