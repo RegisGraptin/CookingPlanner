@@ -5,12 +5,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login import LoginManager
 from fastapi_login.exceptions import InvalidCredentialsException
-from passlib.context import CryptContext
 from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy.orm import Session
 
 from cookingplanner.models import database
 from cookingplanner.models.schema import User
+from cookingplanner.utils.password import PasswordManager
 
 router = APIRouter()
 
@@ -33,19 +33,6 @@ def get_db():
         db.close()
 
 
-
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
-
-def get_password_hash(password):
-    return pwd_context.hash(password)
-
-
-
-
 class UserRegisterModel(BaseModel):
     """User registration model.
 
@@ -60,6 +47,8 @@ class UserRegisterModel(BaseModel):
 class UserModel(BaseModel):
     """User model information."""
     email: str
+
+
 
 
 EmailAlreadyExistsException = HTTPException(
@@ -88,7 +77,6 @@ def get_user(email: str) -> User:
     db.close()
 
     return user
-    
 
 
 @router.post('/register', status_code=status.HTTP_201_CREATED)
@@ -116,7 +104,7 @@ def register(data: UserRegisterModel, db: Session = Depends(get_db)) -> UserMode
         raise EmailAlreadyExistsException
     
     # Hash password
-    hashed_password = get_password_hash(password)
+    hashed_password = PasswordManager().get_password_hash(password)
 
     # Create new user
     db_user  = User(email=email, hashed_password=hashed_password)
@@ -153,7 +141,7 @@ def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get
         raise InvalidCredentialsException
     
     # The user's password does not match with the stored password
-    if not verify_password(password, user.hashed_password):
+    if not PasswordManager().verify_password(password, user.hashed_password):
         raise InvalidCredentialsException
 
     # Create the access token
