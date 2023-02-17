@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 
 from cookingplanner.models import database
 from cookingplanner.models.schema import User
+from cookingplanner.utils.exceptions import EmailAlreadyExistsException
 from cookingplanner.utils.password import PasswordManager
 
 router = APIRouter()
@@ -51,11 +52,7 @@ class UserModel(BaseModel):
 
 
 
-EmailAlreadyExistsException = HTTPException(
-    status_code=status.HTTP_409_CONFLICT,
-    detail="Email already exists.",
-    headers={"WWW-Authenticate": "Bearer"}
-)
+
 
 @manager.user_loader()
 def get_user(email: str) -> User:
