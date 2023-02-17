@@ -12,6 +12,8 @@ class Config(metaclass=SingletonMeta):
         self.env_name = os.environ.get('RUN_ENV', 'prod')
         self.env_file = ".env"
 
+        self.openapi_url = "/openapi.json"
+
         if self.env_name == 'test':
             logging.info("Load Testing environment")
             self.env_file = ".test.env"
@@ -22,5 +24,11 @@ class Config(metaclass=SingletonMeta):
         
         self.loaded = load_dotenv(self.env_file)
 
+        if not (os.environ.get('SHOW_OPEN_API') == "True"):
+            self.openapi_url = None
+
         if not self.loaded:
             raise ValueError("Could not load environment variabls")
+
+    def get_openapi_url(self):
+        return self.openapi_url

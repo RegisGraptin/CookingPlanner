@@ -19,7 +19,7 @@ from cookingplanner.routers.auth import router as router_auth
 
 
 # Load the configuration, database and storage
-Config()
+config = Config()
 
 database = Database()
 database.generate()
@@ -27,15 +27,7 @@ database.generate()
 recipe_storage = RecipeStorage(config_path="./")
 
 
-class Settings(BaseSettings):
-    openapi_url: str = "/openapi.json"
-
-settings = Settings()
-
-if os.environ.get('RUN_ENV', 'prod') == 'prod':
-    settings.openapi_url = None
-
-app = FastAPI(openapi_url=settings.openapi_url)
+app = FastAPI(openapi_url=config.get_openapi_url())
 
 app.include_router(router_auth, prefix="/auth")
 
