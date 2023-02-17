@@ -1,10 +1,7 @@
 
-import os
 from datetime import date
 
 from fastapi import FastAPI, HTTPException, status
-from pydantic import BaseSettings
-
 
 from cookingplanner.config import Config
 from cookingplanner.generator.meal import Week

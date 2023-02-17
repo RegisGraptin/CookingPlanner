@@ -1,9 +1,9 @@
-import time
-import pytest
 import json
+import time
 
-from fastapi.testclient import TestClient
+import pytest
 from fastapi import status
+from fastapi.testclient import TestClient
 
 from cookingplanner.main import app
 from cookingplanner.models.database import Database
@@ -45,7 +45,7 @@ def test_auth_create_account():
     content = json.loads(response.content)
 
     assert content.get('email')          == fake_account.get('email')
-    assert content.get('password', None) == None
+    assert content.get('password', None) is None
     assert len(content.keys())           == 1
 
     # Create another account with a new email
@@ -59,7 +59,7 @@ def test_auth_create_account():
     content = json.loads(response.content)
 
     assert content.get('email')          == fake_account_2.get('email')
-    assert content.get('password', None) == None
+    assert content.get('password', None) is None
     assert len(content.keys())           == 1
 
 @pytest.mark.parametrize("email, password", [
@@ -212,6 +212,8 @@ def test_auth_get_user_account_info():
     assert user.get('hashed_password') is None
 
 def test_auth_get_user_without_token():
+    """Try to get the user without a toke or with invalid one."""
+
     # Create a new account
     client.post(
         '/auth/register', 
