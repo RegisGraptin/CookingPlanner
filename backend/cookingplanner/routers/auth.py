@@ -165,9 +165,15 @@ def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get
 
 
 @router.get('/user')
-def user(user = Depends(manager)):
-    """
-    Need token in the `Authorization` as follow:
-    Bearer <token>
+def user(user = Depends(manager)) -> UserModel:
+    """Get the user information.
+
+    The user need to be authenticated. An access token is required.
+
+    Args:
+        user (User, optional): User from the database. Defaults to Depends(manager).
+
+    Returns:
+        UserModel: User information.
     """
     return UserModel(email=user.email)

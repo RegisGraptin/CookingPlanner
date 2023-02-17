@@ -211,6 +211,40 @@ def test_auth_get_user_account_info():
     assert user.get('email') == "fake@example.com"
     assert user.get('hashed_password') is None
 
+def test_auth_get_user_without_token():
+    # Create a new account
+    client.post(
+        '/auth/register', 
+        content=json.dumps(fake_account),
+    )
+    
+    response = client.get(
+        '/auth/user'
+    )
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    token = "invalid_token"
+
+    headers = {"Authorization": f"Bearer {token}"}
+    response = client.get(
+        '/auth/user',
+        headers = headers
+    )
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+
+    token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmYWtlQGV4YW1wbGUuY29tIiwiZXhwIjoxNjc2NjcwNzA4fQ.eyJzdWIiOiJmYWtlQGV4YW1wbGUuY29tIiwiZXhwIjoxNjc2NjcwNzA4fQ"
+
+    headers = {"Authorization": f"Bearer {token}"}
+    response = client.get(
+        '/auth/user',
+        headers = headers
+    )
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+
 def test_auth_double_login_token_validity():
     """Check that the token changed when we login a new time.
     And check that we can login with both token as the access token should not change between the two requests.
