@@ -42,3 +42,11 @@ class Database(metaclass=SingletonMeta):
 
         # Create Database Schema
         self.Base.metadata.create_all(bind=self.engine)
+
+
+    def create_session(self):
+        db = self.get_session()
+        try:
+            yield db
+        finally:
+            db.close()

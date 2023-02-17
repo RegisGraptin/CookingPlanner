@@ -1,20 +1,19 @@
 
 import os
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login import LoginManager
 from fastapi_login.exceptions import InvalidCredentialsException
 from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy.orm import Session
 
-from cookingplanner.models import database
+from cookingplanner.models.database import Database
 from cookingplanner.models.schema import User
 from cookingplanner.utils.exceptions import EmailAlreadyExistsException
 from cookingplanner.utils.password import PasswordManager
 
 router = APIRouter()
-
 
 SECRET = os.environ.get("SECRET_KEY", None)
 
@@ -23,15 +22,8 @@ if SECRET is None:
 
 manager = LoginManager(SECRET, '/token')
 
-database.Database()
-
-# Dependency
-def get_db():
-    db = database.Database().get_session()
-    try:
-        yield db
-    finally:
-        db.close()
+# Initialize the database
+database = Database()
 
 
 class UserRegisterModel(BaseModel):
@@ -67,7 +59,7 @@ def get_user(email: str) -> User:
         User: Corresponding user.
     """
     # Create a database session
-    db = database.Database().get_session()
+    db = database.get_session()
 
     user = db.query(User).filter(User.email == email).first()
 
@@ -77,7 +69,7 @@ def get_user(email: str) -> User:
 
 
 @router.post('/register', status_code=status.HTTP_201_CREATED)
-def register(data: UserRegisterModel, db: Session = Depends(get_db)) -> UserModel:
+def register(data: UserRegisterModel, db: Session = Depends(database.create_session)) -> UserModel:
     """Register a new user.
 
     Args:
@@ -113,7 +105,7 @@ def register(data: UserRegisterModel, db: Session = Depends(get_db)) -> UserMode
 
 
 @router.post('/token')
-def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.create_session)):
     """Login the user.
 
     Args:
