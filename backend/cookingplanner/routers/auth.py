@@ -5,12 +5,12 @@ from fastapi import APIRouter, Depends, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login import LoginManager
 from fastapi_login.exceptions import InvalidCredentialsException
-from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy.orm import Session
 
 from cookingplanner.models.database import Database
 from cookingplanner.models.schema import User
-from cookingplanner.utils.exceptions import EmailAlreadyExistsException
+from cookingplanner.routers.exceptions import EmailAlreadyExistsException
+from cookingplanner.routers.request_data_model import UserModel, UserRegisterModel
 from cookingplanner.utils.password import PasswordManager
 
 router = APIRouter()
@@ -24,26 +24,6 @@ manager = LoginManager(SECRET, '/token')
 
 # Initialize the database
 database = Database()
-
-
-class UserRegisterModel(BaseModel):
-    """User registration model.
-
-    Two fields are needed to register: 
-    - email : email address of the user.
-    - password : password of the user.
-    """
-    email    : EmailStr = Field()
-    password : str   = Field(min_length=8)
-
-
-class UserModel(BaseModel):
-    """User model information."""
-    email: str
-
-
-
-
 
 
 @manager.user_loader()
