@@ -1,7 +1,10 @@
 
+import os
 from datetime import date
 
 from fastapi import FastAPI, HTTPException, status
+from pydantic import BaseSettings
+
 
 from cookingplanner.config import Config
 from cookingplanner.generator.meal import Week
@@ -23,7 +26,16 @@ database.generate()
 
 recipe_storage = RecipeStorage(config_path="./")
 
-app = FastAPI()
+
+class Settings(BaseSettings):
+    openapi_url: str = "/openapi.json"
+
+settings = Settings()
+
+if os.environ.get('RUN_ENV', 'prod') == 'prod':
+    settings.openapi_url = None
+
+app = FastAPI(openapi_url=settings.openapi_url)
 
 app.include_router(router_auth, prefix="/auth")
 
@@ -71,22 +83,23 @@ def generate_next_week(strategy: str) -> Week:
 
 
 
-from fastapi.openapi.utils import get_openapi
+    # print("Got the run env to test")
 
-def custom_openapi():
-    if app.openapi_schema:
-        return app.openapi_schema
-    openapi_schema = get_openapi(
-        title="Custom title",
-        version="2.5.0",
-        description="This is a very custom OpenAPI schema",
-        routes=app.routes,
-    )
-    openapi_schema["info"]["x-logo"] = {
-        "url": "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png"
-    }
-    app.openapi_schema = openapi_schema
-    return app.openapi_schema
+    # from fastapi.openapi.utils import get_openapi
 
-app.openapi = custom_openapi
+    # def custom_openapi():
+    #     if app.openapi_schema:
+    #         return app.openapi_schema
+    #     openapi_schema = get_openapi(
+    #         title="Custom title",
+    #         version="2.5.0",
+    #         description="This is a very custom OpenAPI schema",
+    #         routes=app.routes,
+    #     )
+    #     openapi_schema["info"]["x-logo"] = {
+    #         "url": "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png"
+    #     }
+    #     app.openapi_schema = openapi_schema
+    #     return app.openapi_schema
 
+    # app.openapi = custom_openapi
