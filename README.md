@@ -3,13 +3,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/RegisGraptin/CookingPlanner">
-    <img src="./mama.svg" alt="Logo" width="80" height="80">
+    <img src="./mama.svg" alt="Logo" width="120" height="120">
   </a>
 
   <h3 align="center">Cooking Planner</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    Elevate your meals, simplify your life with Cooking Planner
     <br />
     <!--
     <a href=""><strong>Explore the docs »</strong></a>
