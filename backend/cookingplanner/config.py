@@ -10,6 +10,10 @@ class Config(metaclass=SingletonMeta):
     """Config class
     
     Define the configuration of the running app.
+
+
+    OpenAPI : Default : "/openapi.json" to show else None to hide.
+
     """
 
     def __init__(self) -> None:
