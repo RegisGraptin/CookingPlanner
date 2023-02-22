@@ -35,8 +35,8 @@ class Config(metaclass=SingletonMeta):
         if not os.environ.get('SHOW_OPEN_API') == "True":
             self.openapi_url = None
 
-        if not self.loaded:
-            raise ValueError("Could not load environment variabls")
+        # if not self.loaded or self.env_name != "prod":
+        #     raise ValueError("Could not load environment variables")
 
     def get_openapi_url(self) -> str:
         """Get the open api url.
