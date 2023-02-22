@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/RegisGraptin/CookingPlanner">
-    <img src="./mama.svg" alt="Logo" width="120" height="120">
+    <img src="./docs/mama.svg" alt="Logo" width="120" height="120">
   </a>
 
   <h3 align="center">Cooking Planner</h3>

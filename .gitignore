@@ -162,3 +162,6 @@ cython_debug/
 .vscode/
 
 docs/
+docs/inspirations/
+!docs/mama.svg
+!docs/class_diagram.mdj
