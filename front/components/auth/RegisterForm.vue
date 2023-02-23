@@ -4,28 +4,28 @@
         <div class="w-full h-100">
             <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">Register to your account</h1>
 
-            <form class="mt-6" action="#" method="POST">
+            <form class="mt-6" @submit.prevent="registerAccount">
                 <div>
                     <label class="block text-gray-700">Email Address</label>
-                    <input type="email" name="" id="" placeholder="Enter Email Address"
+                    <input v-model="form.email" type="email" name="email" placeholder="Enter Email Address"
                         class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                         autofocus required>
                 </div>
 
                 <div class="mt-4">
                     <label class="block text-gray-700">Password</label>
-                    <input type="password" name="" id="" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+                    <input v-model="form.password" type="password" name="" id="" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                         focus:bg-white focus:outline-none" required>
                 </div>
 
                 <div class="mt-4">
                     <label class="block text-gray-700">Confirm Password</label>
-                    <input type="confirm_password" name="" id="" placeholder="Confirm Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+                    <input v-model="form.confirm_password" type="password" name="" id="" placeholder="Confirm Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                         focus:bg-white focus:outline-none" required>
                 </div>
 
                 <div class="mt-4">
-                    <input id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <input v-model="form.terms_and_services" id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                     <label for="checked-checkbox" class="ml-2 text-sm font-medium text-gray-700">Agree on Terms of Service, Privacy Policy</label>
                 </div>
 
@@ -75,3 +75,51 @@
         </div>
     </section>
 </template>
+<script>
+
+import { CookingPlannerAPI } from '~/api/cooking_planner';
+
+export default {
+    data() {
+        return {
+            form: {
+                email: "",
+                password: "",
+                confirm_password: "",
+                terms_and_services: false,
+            }
+        }
+    },
+    methods: {
+        registerAccount: async function() {
+
+            
+
+            // TODO :: Check the form value
+
+            this.$log.debug("Create a new account");
+
+            let data = null;
+
+            let api = new CookingPlannerAPI();
+            api.createNewAccount(this.$axios, this.form.email, this.form.password)
+                .then((response) => {
+                    this.$log.debug("The account has beed created");
+                    data = response.data;
+                })
+                .catch((error) => {
+                    this.$log.debug("An error occured when send the request");
+                    // TODO :: Create a toast or show a message for the user
+                    console.log(error);
+                })
+
+            // We successfully create a new account
+            // Now login the user and redirect it
+            if (data != null) {
+                // TODO :: 
+            }
+
+        }
+    }
+}
+</script>
