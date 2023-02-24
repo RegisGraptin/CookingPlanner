@@ -80,8 +80,14 @@ export default {
           logout: {url: '/cookingplanner/auth/logout', method: 'POST' },
           user:   {url: '/cookingplanner/auth/user', method: 'GET' },
         }
-      }
-    }
+      },
+    },
+    redirect: {
+      login: '/',
+      logout: '/',
+      callback: '/auth/login',
+      home: '/',
+    },
   },
 
 
