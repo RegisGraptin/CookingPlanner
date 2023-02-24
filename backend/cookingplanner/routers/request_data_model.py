@@ -13,6 +13,14 @@ class UserRegisterModel(BaseModel):
 
 
 class UserLoginModel(BaseModel):
+    """User Login Model.
+    
+    Two fields are defined:
+    - username: email address.
+    - password: password of the user.
+
+    Note: here, we choose the username instead of the email name because of the OAuth 2 standard.
+    """
     username : EmailStr = Field()
     password : str      = Field(min_length=8)
 
