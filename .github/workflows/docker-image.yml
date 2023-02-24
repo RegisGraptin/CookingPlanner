@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Cooking Planner CI
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image from the Backend
-      run: docker build ./backend/ --file ./backend/Dockerfile --tag cookingplanning-backend:$(date +%s)
+      run: docker build ./backend/ --file ./backend/Dockerfile --tag cookingplanner-backend
   
   test_backend:
     needs: build_backend

@@ -1,56 +1,44 @@
-# Backend Application
+# Cooking Planner - Backend
 
-## CookingPlanncer package
+## Run the project
 
+### Create a env file
 
-```
-sudo docker build .
-sudo docker run -p 8000:8000 2b71b2c4c3a5
-```
+Create a `.env` file that will contain the environment variables for the project. You can have a look at the `.env.example` to see what the environment variables are and which values you need to set. 
 
-sudo docker exec -it 2b71b2c4c3a5 bash
+You can create multiple env files. One for testing, for development and one for production. 
 
-# Testing 
+// TODO :: Write a guide to explain in detail the .env variables, especially for specifying the values that can be used in prod or in testing only.
 
-Production or Testing more are present in our script in order to load the corresponding database.
+### Run it locally
 
-
-# Entry point
-
-
-generate
-
+In this project, we use [`Poetry`](https://python-poetry.org/) as a python package manager. If you are not familiar with it, you can simply take a look on the documentation in the website and [install it](https://python-poetry.org/docs/#installing-with-the-official-installer). Then, to install the dependencies of this project run:
 
 ```bash
-export PYTHONPATH="${PYTHONPATH}:./cookingplanner/"
-poetry run python ./cookingplanner/main.py --update name_of_strategy
+poetry install
 ```
 
-- `--update`: indicates we want to scrap online website for getting recipes.
-- `strategy`: indicates the types of strategy we want to apply to generate the next week.
-        - `unique`: Strategy of having a different recipe each day of the week.
+Finally, you can run a backend instance with the `docker-entrypoint.sh`
 
-
-
-# URLs 
-
-http://0.0.0.0:8000/week/work/unique
-
-
-
-## Planning
-
-- The '/week/work/unique' return empty/null fields for the dish. 
-    - Add testes to reproduce this issues
-    - Correct the issue
-
-
-
-Pre-commit
-
-```shell
-poetry run pre-commit run --all-files
+```bash
+./docker-entrypoint.sh
 ```
+
+You should now have a backend running on : `0.0.0.0:8000`
+
+### Docker process
+
+After creating your `.env` file, you can simply run a backend instance with docker:
+
+```bash
+sudo docker build . --file ./Dockerfile --tag cookingplanner-backend
+sudo docker run --env-file .env -p 8000:8000 -t cookingplanner-backend:latest
+```
+
+## Linter & Testing
+
+For the backend, we have set a linter, with `pylint`. We also had test created with `pytest`. 
+For the testing, we have set a `.test.env` specifically for this purpose. 
 
 ### Pylint
 
@@ -73,13 +61,7 @@ poetry run pytest --cov
 ```
 
 
-## Activate the environment
-
-poetry shell
-
-
-
-# MONGO DB links
+# Some references - MONGO DB
 
 https://www.tutorialspoint.com/python_data_science/python_nosql_databases.htm
 
