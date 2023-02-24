@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from cookingplanner.models.database import Database
 from cookingplanner.models.schema import User
 from cookingplanner.routers.exceptions import EmailAlreadyExistsException
-from cookingplanner.routers.request_data_model import UserModel, UserRegisterModel
+from cookingplanner.routers.request_data_model import UserLoginModel, UserModel, UserRegisterModel
 from cookingplanner.utils.password import PasswordManager
 
 router = APIRouter()
@@ -20,7 +20,7 @@ SECRET = os.environ.get("SECRET_KEY", None)
 if SECRET is None:
     raise ValueError("SECRET_KEY value is not defined. Please defined it in your .env file.")
 
-manager = LoginManager(SECRET, '/token')
+manager = LoginManager(SECRET, '/login')
 
 # Initialize the database
 database = Database()
@@ -84,12 +84,12 @@ def register(data: UserRegisterModel, db_session: Session = Depends(database.cre
     return UserModel(email=db_user.email)
 
 
-@router.post('/token')
-def login(data: OAuth2PasswordRequestForm = Depends(), db_session: Session = Depends(database.create_session)):
+@router.post('/login')
+def login(data: UserLoginModel, db_session: Session = Depends(database.create_session)):
     """Login the user.
 
     Args:
-        data (OAuth2PasswordRequestForm, optional): User information. Defaults to Depends().
+        data (UserLoginModel, optional): User information. Defaults to Depends().
         db_session (Session, optional): Database session. Defaults to Depends(get_db).
 
     Raises:

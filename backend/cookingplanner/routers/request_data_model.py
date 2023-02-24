@@ -12,6 +12,10 @@ class UserRegisterModel(BaseModel):
     password : str      = Field(min_length=8)
 
 
+class UserLoginModel(BaseModel):
+    username : EmailStr = Field()
+    password : str      = Field(min_length=8)
+
 class UserModel(BaseModel):
     """User model information."""
     email: str

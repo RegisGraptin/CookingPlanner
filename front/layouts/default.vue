@@ -1,12 +1,12 @@
 <template>
-  <v-app>
+  <app>
     
-    <v-main>
+    <main>
         <Nuxt />
-    </v-main>
+    </main>
     
     <Footer />
-  </v-app>
+  </app>
 </template>
 
 <script>

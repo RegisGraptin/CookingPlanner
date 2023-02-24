@@ -101,11 +101,11 @@ def test_auth_login_account():
 
     # Login the user
     response = client.post(
-        '/auth/token',
-        data={
+        '/auth/login',
+        content=json.dumps({
             "username": fake_account.get('email'), 
             "password": fake_account.get('password'),
-        },
+        }),
         
     )
 
@@ -124,11 +124,11 @@ def test_auth_login_with_non_existing_account():
     """Try to login with a non existing account."""
 
     response = client.post(
-        '/auth/token', 
-        data={
+        '/auth/login', 
+        content=json.dumps({
             "username": fake_account.get('email'), 
             "password": fake_account.get('password'),
-        },
+        }),
     )
 
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
@@ -144,11 +144,11 @@ def test_auth_login_wrong_password():
 
     # Login the user
     access_response = client.post(
-        '/auth/token',
-        data={
+        '/auth/login',
+        content=json.dumps({
             "username": fake_account.get('email'), 
             "password": fake_account.get('password') + "_error",
-        },
+        }),
         
     )
 
@@ -183,11 +183,11 @@ def test_auth_get_user_account_info():
 
     # Login the user
     access_response = client.post(
-        '/auth/token',
-        data={
+        '/auth/login',
+        content=json.dumps({
             "username": fake_account.get('email'), 
             "password": fake_account.get('password'),
-        },
+        }),
         
     )
 
@@ -260,11 +260,11 @@ def test_auth_double_login_token_validity():
 
     # Login the user
     access_response = client.post(
-        '/auth/token',
-        data={
+        '/auth/login',
+        content=json.dumps({
             "username": fake_account.get('email'), 
             "password": fake_account.get('password'),
-        },   
+        }),
     )
 
     # Wait a second to force the change of the other auth token
@@ -276,11 +276,11 @@ def test_auth_double_login_token_validity():
 
     # Login the user
     access_response_2 = client.post(
-        '/auth/token',
-        data={
+        '/auth/login',
+        content=json.dumps({
             "username": fake_account.get('email'), 
             "password": fake_account.get('password'),
-        },   
+        }),
     )
 
     data = json.loads(access_response_2.content)

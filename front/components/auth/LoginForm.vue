@@ -4,17 +4,17 @@
         <div class="w-full h-100">
             <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
 
-            <form class="mt-6" action="#" method="POST">
+            <form class="mt-6" @submit.prevent="loginAccount">
                 <div>
                     <label class="block text-gray-700">Email Address</label>
-                    <input type="email" name="" id="" placeholder="Enter Email Address"
+                    <input v-model="email" type="email" name="" id="" placeholder="Enter Email Address"
                         class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                         autofocus required>
                 </div>
 
                 <div class="mt-4">
                     <label class="block text-gray-700">Password</label>
-                    <input type="password" name="" id="" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+                    <input v-model="password" type="password" name="" id="" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                         focus:bg-white focus:outline-none" required>
                 </div>
 
@@ -72,3 +72,33 @@
 
     </section>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            email: "",
+            password: "",
+        }
+    },
+    methods: {
+        loginAccount: async function() {
+            // username | password
+
+            console.log("login ok");
+
+            let data = {
+                "username": this.email,
+                "password": this.password
+            }
+
+            try {
+                let response = await this.$auth.loginWith('local', { data: data })
+                console.log(response)
+            } catch (err) {
+                console.log(err)
+            }
+
+        }
+    }
+}
+</script>

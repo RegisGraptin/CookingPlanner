@@ -1,5 +1,3 @@
-import colors from 'vuetify/es5/util/colors'
-
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -35,8 +33,6 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
-    // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify',
 
     '@nuxt/postcss8',
   ],
@@ -44,6 +40,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',             // https://auth.nuxtjs.org/
     '@nuxtjs/i18n',
     'nuxt-logger',
     ['nuxt-tailvue', {all: true}],   // https://github.com/acidjazz/nuxt-tailvue
@@ -67,6 +64,26 @@ export default {
     },
   },
 
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true,
+        },
+        user: {
+          property: 'user',
+          autoFetch: false,
+        },
+        endpoints: {
+          login:  {url: '/cookingplanner/auth/login', method: 'POST' },
+          logout: {url: '/cookingplanner/auth/logout', method: 'POST' },
+          user:   {url: '/cookingplanner/auth/user', method: 'GET' },
+        }
+      }
+    }
+  },
+
 
   i18n: {
     locales: [
@@ -86,25 +103,6 @@ export default {
     lazy: true,
     langDir: 'lang/',
     defaultLocale: 'fr',
-  },
-
-  // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
-  vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: true,
-      themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        }
-      }
-    }
   },
 
   logger: {
