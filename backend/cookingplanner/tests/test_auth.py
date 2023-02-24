@@ -205,7 +205,7 @@ def test_auth_get_user_account_info():
 
     assert response.status_code == status.HTTP_200_OK
 
-    user = json.loads(response.content)
+    user = json.loads(response.content).get('user')
     
     assert user is not None
     assert user.get('email') == "fake@example.com"

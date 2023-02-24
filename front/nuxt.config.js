@@ -68,12 +68,12 @@ export default {
     strategies: {
       local: {
         token: {
-          property: 'token',
+          property: 'access_token',
           global: true,
         },
         user: {
           property: 'user',
-          autoFetch: false,
+          autoFetch: true,
         },
         endpoints: {
           login:  {url: '/cookingplanner/auth/login', method: 'POST' },

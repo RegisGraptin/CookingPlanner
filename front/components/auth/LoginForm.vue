@@ -84,20 +84,22 @@ export default {
         loginAccount: async function() {
             // username | password
 
-            console.log("login ok");
+            this.$log.debug("Login to the account");
 
             let data = {
                 "username": this.email,
                 "password": this.password
             }
 
-            try {
-                let response = await this.$auth.loginWith('local', { data: data })
-                console.log(response)
-            } catch (err) {
-                console.log(err)
-            }
-
+            this.$auth.loginWith('local', { data: data }).then(
+                (response) => {
+                    console.log(response)
+                }
+            ).catch(
+                (err) => {
+                    console.log(err)
+                }
+            )
         }
     }
 }

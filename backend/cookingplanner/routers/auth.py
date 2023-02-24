@@ -2,7 +2,7 @@
 import os
 
 from fastapi import APIRouter, Depends, status
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi_login import LoginManager
 from fastapi_login.exceptions import InvalidCredentialsException
 from sqlalchemy.orm import Session
@@ -118,8 +118,7 @@ def login(data: UserLoginModel, db_session: Session = Depends(database.create_se
         data={'sub': email}
     )
     
-    return {'access_token': access_token, 'token_type': 'bearer'}
-
+    return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get('/user')
 def get_user(user = Depends(manager)) -> UserModel:
@@ -133,4 +132,4 @@ def get_user(user = Depends(manager)) -> UserModel:
     Returns:
         UserModel: User information.
     """
-    return UserModel(email=user.email)
+    return { "user": UserModel(email=user.email) }
