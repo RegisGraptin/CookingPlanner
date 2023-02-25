@@ -1,7 +1,6 @@
 <template>
-
-    <div class="presentation_background">
-        <div class="container max-height relative">
+    <div class="presentation-background">
+        <div class="presentation-content-layer container mx-auto max-height relative">
 
             <header id="logo">
 
@@ -18,10 +17,10 @@
                     </div>
 
 
-                    
                     <div class="absolute flex content-center right-0">
-                        
-                        <div v-if="this.$auth.loggedIn" class="white-button max-w-sm shadow-lg ring-1 ring-black/5 rounded-xl gap-6 dark:highlight-white/5 mr-5 z-10">
+
+                        <div v-if="this.$auth.loggedIn"
+                            class="white-button max-w-sm shadow-lg ring-1 ring-black/5 rounded-xl gap-6 dark:highlight-white/5 mr-5 z-10">
                             <div class="py-3 pl-5 pr-5">
                                 <NuxtLink to="/auth/login">
                                     <a href="#" class="font-semibold text-gray-900 hover:text-gray-900">
@@ -31,7 +30,8 @@
                             </div>
                         </div>
 
-                        <div v-if="this.$auth.loggedIn" class="white-button max-w-sm shadow-lg ring-1 ring-black/5 rounded-xl gap-6 dark:highlight-white/5 z-10">
+                        <div v-if="this.$auth.loggedIn"
+                            class="white-button max-w-sm shadow-lg ring-1 ring-black/5 rounded-xl gap-6 dark:highlight-white/5 z-10">
                             <div class="py-3 pl-5 pr-5">
                                 <NuxtLink to="/auth/register">
                                     <a href="#" class="font-semibold text-gray-900 hover:text-gray-900">
@@ -41,7 +41,8 @@
                             </div>
                         </div>
 
-                        <div v-if="!this.$auth.loggedIn" class="white-button max-w-sm shadow-lg ring-1 ring-black/5 rounded-xl gap-6 dark:highlight-white/5 mr-5 z-10">
+                        <div v-if="!this.$auth.loggedIn"
+                            class="white-button max-w-sm shadow-lg ring-1 ring-black/5 rounded-xl gap-6 dark:highlight-white/5 mr-5 z-10">
                             <div class="py-3 pl-5 pr-5">
                                 <NuxtLink to="/auth/logout">
                                     <a href="#" class="font-semibold text-gray-900 hover:text-gray-900">
@@ -59,7 +60,7 @@
 
             </header>
 
-            <section class="presentation_content">
+            <section class="presentation-content">
 
                 <article>
                     <h1 class="landing-title">
@@ -67,14 +68,18 @@
                         <span class="shift-name">Planner</span>
                     </h1>
 
-                    <p>La nouvelle application qui te permet d'organiser tes repas de la semaine.</p>
-                    <p>Envie de varier ?</p>
+                    <h2 class="text-2xl">{{ $t('home_page.presentation_section.slogan') }}</h2>
+                    <p class="pt-5">{{ $t('home_page.presentation_section.explain') }}</p>
 
-                    <p>
-                        <NuxtLink to="/generate">
-                            Essayer maintenant
-                        </NuxtLink>
-                    </p>
+                    <div
+                        class="inline-block mt-5 white-button max-w-sm shadow-lg ring-1 ring-black/5 rounded-xl gap-6 dark:highlight-white/5 z-10">
+                        <div class="py-3 pl-5 pr-5">
+                            <NuxtLink to="/generate">
+                                Give it a try!
+                            </NuxtLink>
+                        </div>
+                    </div>
+                
                 </article>
 
                 <article class="absolute bottom-0 right-0">
@@ -113,7 +118,7 @@ nav#top-menu,
     color: #333333;
 }
 
-.presentation_background {
+.presentation-background {
     height: 500px;
     background-color: #febd2e;
 
@@ -132,10 +137,16 @@ nav#top-menu,
     /* position: relative; */
 }
 
+.presentation-content-layer {
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 10px;
+}
+
 h1.landing-title {
     font-size: 80px;
     line-height: 80px;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
 }
 
 h1.landing-title>.shift-name {
@@ -143,8 +154,9 @@ h1.landing-title>.shift-name {
 }
 
 
-.presentation_content {
+.presentation-content {
     padding-top: 50px;
+    width: 700px;
 }
 
 .max-height {

@@ -1,5 +1,5 @@
 <template>
-    <section class="question-features container grid grid-cols-2">
+    <section class="question-features container mx-auto grid grid-cols-2">
 
         <article class="grid grid grid-cols-2">
 

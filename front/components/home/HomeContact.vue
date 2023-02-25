@@ -2,7 +2,7 @@
 
     <section class="contact-section">
 
-        <article class="container py-5 pl-5">
+        <article class="container mx-auto py-5 pl-5">
 
             <h2>Get started</h2>
 
