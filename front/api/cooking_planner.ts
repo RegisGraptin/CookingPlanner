@@ -59,6 +59,18 @@ class CookingPlannerAPI {
         return response;
     }
 
+    async getProfiles(axios: any) {
+
+        
+
+        let url : string = CookingPlannerAPI.API_PROXY_NAME + '/profile';
+        
+        await axios.get(url).then((res: any) => {
+            console.log(res);
+        })
+
+    }
+
 }
 
 
