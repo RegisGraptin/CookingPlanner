@@ -77,7 +77,7 @@ export default {
         },
         endpoints: {
           login:  {url: '/cookingplanner/auth/login', method: 'POST' },
-          logout: {url: '/cookingplanner/auth/logout', method: 'POST' },
+          logout: false,
           user:   {url: '/cookingplanner/auth/user', method: 'GET' },
         }
       },

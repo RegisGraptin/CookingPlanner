@@ -1,9 +1,10 @@
 <template></template>
 <script>
 export default {
-    created() {
-        this.$auth.logout();
+    middleware: 'auth',
+    async created() {
+        this.$auth.strategy.token.reset()
+        await this.$auth.logout();
     },
 }
 </script>
-  
