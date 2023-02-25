@@ -13,6 +13,7 @@ from cookingplanner.scraping.scraping import Scraping
 from cookingplanner.scraping.scraping_url import ScrapingURL
 
 from cookingplanner.routers.auth import router as router_auth
+from cookingplanner.routers.profile import router as router_profile
 
 
 # Load the configuration, database and storage
@@ -27,6 +28,7 @@ recipe_storage = RecipeStorage(config_path="./")
 app = FastAPI(openapi_url=config.get_openapi_url())
 
 app.include_router(router_auth, prefix="/auth")
+app.include_router(router_profile, prefix="/profile")
 
 @app.get("/generate/{n_pages}", status_code=status.HTTP_201_CREATED)
 def generate_data(n_pages: int = 10):
