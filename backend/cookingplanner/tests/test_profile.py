@@ -55,9 +55,9 @@ def access_token():
             "password": fake_account.get('password'),
         }),
     )
-    access_token = json.loads(response.content).get('access_token')
+    token = json.loads(response.content).get('access_token')
     
-    yield access_token
+    yield token
 
     # TODO :: Delete the user account
 
@@ -81,7 +81,7 @@ def test_create_profile(access_token: str):
 
     # Check the matching between the request and the created one
     profile_created = json.loads(response.content)
-    for key in fake_profile.keys():
+    for key in fake_profile:
         assert profile_created.get(key) is not None
         assert fake_profile.get(key) == profile_created.get(key)
 

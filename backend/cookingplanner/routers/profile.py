@@ -1,7 +1,7 @@
 
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, status
-from pydantic import BaseModel, Field, PositiveInt
+from pydantic import BaseModel, Field
 
 from cookingplanner.models.database import Database
 from cookingplanner.models.schema import Profile
@@ -12,6 +12,7 @@ router = APIRouter()
 database = Database()
 
 class ProfileModel(BaseModel):
+    """Profile model request."""
     n_persons               : int = Field(int, ge=0, le=10)
     cost                    : int = Field(int, ge=0, le=5)
     spicy                   : int = Field(int, ge=0, le=5)
