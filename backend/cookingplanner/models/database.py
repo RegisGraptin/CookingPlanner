@@ -43,6 +43,11 @@ class Database(metaclass=SingletonMeta):
         # Create Database Schema
         self.Base.metadata.create_all(bind=self.engine)
 
+        # Fill the database with initial values
+        # TODO :: Load Admin User 
+        # TODO :: Load cooking equipment
+        # TODO :: Load ingredients
+
 
     def create_session(self):
         db = self.get_session()
