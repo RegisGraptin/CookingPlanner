@@ -20,7 +20,7 @@
                     <div class="absolute flex content-center right-0">
 
                         <div v-if="!this.$auth.loggedIn"
-                            class="white-button max-w-sm shadow-lg ring-1 ring-black/5 rounded-xl gap-6 dark:highlight-white/5 mr-5 z-10">
+                            class="white-button max-w-sm shadow-lg ring-1 ring-black/5 rounded-xl gap-6 dark:highlight-white/5 mr-5 z-10 hover:bg-gray-400">
                             <div class="py-3 pl-5 pr-5">
                                 <NuxtLink to="/auth/login">
                                     <a href="#" class="font-semibold text-gray-900 hover:text-gray-900">
