@@ -61,14 +61,15 @@ class CookingPlannerAPI {
 
     async getProfiles(axios: any) {
 
-        
+        let profiles: any[] = [];
 
         let url : string = CookingPlannerAPI.API_PROXY_NAME + '/profile';
         
-        await axios.get(url).then((res: any) => {
-            console.log(res);
+        await axios.get(url).then((response: any) => {
+            profiles = response.data;
         })
 
+        return profiles;
     }
 
 }
