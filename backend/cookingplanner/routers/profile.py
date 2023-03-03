@@ -13,7 +13,7 @@ database = Database()
 
 class ProfileModel(BaseModel):
     """Profile model request."""
-    n_persons               : int = Field(int, ge=0, le=10)
+    n_persons               : int = Field(int, ge=1, le=10)
     cost                    : int = Field(int, ge=0, le=5)
     spicy                   : int = Field(int, ge=0, le=5)
     culinary_adventurousness: int = Field(int, ge=0, le=5)
