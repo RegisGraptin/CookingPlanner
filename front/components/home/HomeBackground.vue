@@ -93,7 +93,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 header {
     padding-top: 10px;
 }

@@ -1,11 +1,11 @@
 <template>
-  <app>
+  <app class="flex flex-col h-screen justify-between">
     
     <main>
         <Nuxt />
     </main>
     
-    <Footer />
+  <Footer />
   </app>
 </template>
 
@@ -26,13 +26,10 @@ export default {
 
 <style scoped>
 
-main {
+html {
+  scroll-behavior: smooth;
   background-color: #f5f3f0;
   color: #333333;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 </style>
