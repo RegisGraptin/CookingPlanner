@@ -7,7 +7,7 @@
         <h3>Number of persons</h3>
         <article class="flex items-center justify-around w-1/2 mx-auto">
 
-            <div style="width: 50px;">
+            <div style="width: 100px;" class="mr-5">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth=1.5
                     stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round"
@@ -16,7 +16,7 @@
             </div>
 
             <button @click="removePerson"
-                class="w-48 hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
+                class="ml-5 mr-5 w-48 hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
                 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
                     class="group-hover:text-blue-500 mb-1 text-slate-400" width="20" height="20" fill="currentColor"
@@ -27,10 +27,10 @@
             </button>
 
 
-            <p class="text-xl">{{ profile.n_persons }}</p>
+            <p class="text-xl mr-5 ml-5">{{ profile.n_persons }}</p>
 
             <button @click="addPerson"
-                class="w-48 hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
+                class="ml-5 mr-5 w-48 hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
                 <svg class="group-hover:text-blue-500 mb-1 text-slate-400" width="20" height="20" fill="currentColor"
                     aria-hidden="true">
                     <path
@@ -39,7 +39,7 @@
                 Add Person
             </button>
 
-            <div style="width: 50px;">
+            <div style="width: 100px;" class="ml-5">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"

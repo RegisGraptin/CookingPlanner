@@ -65,37 +65,35 @@
             </nav>
         </header>
 
-        <section class="container">
+        <section class="container mx-auto">
 
-            <h2>Create a new profile</h2>
+            <h2 class="mt-5 mb-5">Use an existing profile</h2>
 
-            <ul>
-                <li>Profile 1</li>
-                <li>Profile 2</li>
+            <ul class="flex flex-wrap justify-start">
+
+                <li v-for="profile in profiles" class="w-48 mr-5 mb-5">
+                    <NuxtLink to="/generate/create"
+                        class="h-24 hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
+                        
+                        Profile #{{ profile }}
+                    </NuxtLink>
+                </li>
+
+
+
+                <li class="w-48">
+                    <NuxtLink to="/generate/create"
+                        class="h-24 hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
+                        <svg class="group-hover:text-blue-500 mb-1 text-slate-400" width="20" height="20" fill="currentColor"
+                            aria-hidden="true">
+                            <path
+                                d="M10 5a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V6a1 1 0 0 1 1-1Z" />
+                        </svg>
+                        New profile
+                    </NuxtLink>
+                </li>
+
             </ul>
-
-            <button v-on:click="getProfiles">Get profiles</button>
-
-
-            <a
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                <NuxtLink to="/generate/create">
-                    Create a new profile
-                </NuxtLink>
-            </a>
-
-
-            <li class="flex w-48">
-                <NuxtLink to="/generate/create"
-                    class="hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
-                    <svg class="group-hover:text-blue-500 mb-1 text-slate-400" width="20" height="20" fill="currentColor"
-                        aria-hidden="true">
-                        <path
-                            d="M10 5a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V6a1 1 0 0 1 1-1Z" />
-                    </svg>
-                    New profile
-                </NuxtLink>
-            </li>
 
 
         </section>
@@ -113,11 +111,18 @@ export default {
             profiles: [],
         }
     },
+    created() {
+        this.getProfiles();
+    },
     methods: {
         async getProfiles() {
 
             let api = new CookingPlannerAPI();
             await api.getProfiles(this.$axios);
+
+            for (let i = 0; i < 10; i++) {
+                this.profiles.push(i);
+            }
 
         }
     }
