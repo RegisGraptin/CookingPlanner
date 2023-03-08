@@ -1,6 +1,6 @@
 <template>
 
-    <section class="container mx-auto">
+    <section class="container mx-auto h-screen">
 
         <section class="p-10">
             <div class="flex items-stretch gap-2">
@@ -17,9 +17,12 @@
         <component v-bind:is="steps[current_step]" :profile="create_profile"></component>
         
 
-        <button @click="previousStep">Previous</button>
-        <button @click="nextStep">Next</button>
-        
+        <article class="flex justify-evenly mt-5 mb-5">
+
+            <button @click="previousStep" :disabled="current_step===0" class="inline-flex items-center justify-between w-32 p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 disabled:opacity-25">Previous</button>
+
+            <button @click="nextStep" :disabled="current_step===totalSteps()-1" class="inline-flex items-center justify-between w-32 p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 disabled:opacity-25">Next</button>
+        </article>
     </section>
 
 </template>
@@ -62,10 +65,14 @@ export default {
     },
     methods: {
         nextStep() {
-            this.current_step++;
+            if (this.current_step < this.totalSteps() - 1) {
+                this.current_step++;
+            }
         },
         previousStep() {
-            this.current_step--;
+            if (this.current_step > 0) {
+                this.current_step--;
+            }
         },
         totalSteps() {
             return this.steps.length;
