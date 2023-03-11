@@ -1,6 +1,6 @@
 <template>
 
-    <section class="container mx-auto h-screen">
+    <section class="container mx-auto min-h-screen">
 
         <section class="p-10">
             <div class="flex items-stretch gap-2">
@@ -30,6 +30,7 @@
 
 import FirstStep from './components/FirstStep.vue';
 import SecondStep from './components/SecondStep.vue';
+import ThirdStep from './components/ThirdStep.vue';
 
 export default {
     name: "ProfileForm",
@@ -39,6 +40,7 @@ export default {
             steps: [
                 FirstStep,
                 SecondStep,
+                ThirdStep,
             ],
 
 
@@ -50,10 +52,10 @@ export default {
                 cooking_time: 3,                // [0:5]
 
                 seasonal_recipe: true,          // true or false
-                spicy: 3,                       // spicy level
-                culinary_adventurousness: 3,    // [0:5]
+                spicy: 1,                       // spicy level
+                culinary_adventurousness: 1,    // [0:5]
                 recipe_diversity: 4,            // [0:7]
-                ingredient_diversity: 3,        // [0:5]
+                ingredient_diversity: 1,        // [0:5]
                 
                 
             }
