@@ -100,7 +100,7 @@ export default {
             let api = new CookingPlannerAPI();
             api.createNewAccount(this.$axios, this.email, this.password)
                 .then((response) => {
-                    this.$log.debug("The account has beed created");
+                    this.$log.debug("The account has been created");
                     data = response.data;
                 })
                 .catch((error) => {

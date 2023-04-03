@@ -10,7 +10,7 @@
 import ChooseWidget from '../widgets/ChooseWidget.vue';
 
 export default {
-    name: "",
+    name: "ThirdStepProfileCreation",
     components: { ChooseWidget },
     props: {
         profile: Object
@@ -22,9 +22,10 @@ export default {
                 {
                     key: "seasonal_recipe",
                     profile_variable: this.profile,
+                    title: "Seasonal Recipe",
                     value: [
-                        {name: "Non Seasonal Recipe", value: true, icon: "profile/seasonal_recipe/season.png"},
-                        {name: "Seasonal Recipe", value: false, icon: "profile/seasonal_recipe/season.png"},
+                        {name: "Non Seasonal Recipe", value: false, icon: "profile/seasonal_recipe/season.png"},
+                        {name: "Seasonal Recipe", value: true, icon: "profile/seasonal_recipe/season.png"},
                     ],
                 },
             ]

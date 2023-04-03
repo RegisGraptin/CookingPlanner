@@ -5,7 +5,7 @@
 
         <div class="flex items-center justify-around w-2/3 mx-auto">
 
-            <ul :class="'grid w-full gap-6 md:grid-cols-' + nb_items">
+            <ul :class="'grid w-full gap-6 md:grid-cols-' + items.length">
 
                 <li v-for="(item, index) in items">
 
@@ -37,17 +37,12 @@
 
 <script>
 export default {
-    name: "test",
+    name: "ChooseWidgetComponent",
     props: {
         key_name: String,
         variable: Object,
         items: Array,
         title: String,
     },
-    data() {
-        return {
-            nb_items: this.items.length,
-        }
-    }
 }
 </script>

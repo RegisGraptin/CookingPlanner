@@ -3,7 +3,7 @@ class CookingPlannerAPI {
 
     static API_PROXY_NAME: string = "/cookingplanner";
 
-    constructor() {}
+    constructor() { }
 
     async generateWeekUnique(axios: any) {
         /**
@@ -11,10 +11,10 @@ class CookingPlannerAPI {
          * 
          * Call the api backend.
          */
-        
+
         var week_generated = null;
-        
-        let url : string = CookingPlannerAPI.API_PROXY_NAME + '/week/work/unique';
+
+        let url: string = CookingPlannerAPI.API_PROXY_NAME + '/week/work/unique';
 
         await axios.get(url)
             .then((res: { data: any; }) => {
@@ -24,10 +24,10 @@ class CookingPlannerAPI {
             .catch((err: any) => {
                 throw new Error(err);
             })
-        
+
         return week_generated;
     }
-   
+
     async createNewAccount(axios: any, email: string, password: string) {
         /**
          * Create a new account.
@@ -39,8 +39,8 @@ class CookingPlannerAPI {
          *  - Email already exists in the database (code 409)
          *  - If other issues, we return a server error.
          */
-        
-        let url : string = CookingPlannerAPI.API_PROXY_NAME + '/auth/register';
+
+        let url: string = CookingPlannerAPI.API_PROXY_NAME + '/auth/register';
 
         let response = null;
 
@@ -63,13 +63,33 @@ class CookingPlannerAPI {
 
         let profiles: any[] = [];
 
-        let url : string = CookingPlannerAPI.API_PROXY_NAME + '/profile';
-        
+        let url: string = CookingPlannerAPI.API_PROXY_NAME + '/profile';
+
         await axios.get(url).then((response: any) => {
             profiles = response.data;
         })
 
         return profiles;
+    }
+
+    async createNewProfile(axios: any, profile: any) {
+        /**
+         * Create a new profile.
+         */
+
+        let url: string = CookingPlannerAPI.API_PROXY_NAME + '/profile';
+
+        let response = null;
+
+        await axios.post(url, profile)
+            .then((response: any) => {
+                response = response;
+            })
+            .catch((error: any) => {
+                throw new Error("An error with the server occurred, please try again.");
+            })
+
+        return response;
     }
 
 }

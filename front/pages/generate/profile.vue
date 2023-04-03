@@ -71,11 +71,16 @@
 
             <ul class="flex flex-wrap justify-start">
 
-                <li v-for="profile in profiles" class="w-48 mr-5 mb-5">
-                    <NuxtLink to="/generate/create"
+                <li v-for="(profile, index) in profiles" class="w-48 mr-5 mb-5">
+                    <NuxtLink :to="{
+                        path: '/generate/generate',
+                        params: {
+                            p: profile
+                        }
+                    }"
                         class="h-24 hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
                         
-                        Profile #{{ profile }}
+                        Profile #{{ index }}
                     </NuxtLink>
                 </li>
 
@@ -118,11 +123,9 @@ export default {
         async getProfiles() {
 
             let api = new CookingPlannerAPI();
-            await api.getProfiles(this.$axios);
+            let user_profiles = await api.getProfiles(this.$axios);
 
-            for (let i = 0; i < 10; i++) {
-                this.profiles.push(i);
-            }
+            this.profiles = user_profiles;
 
         }
     }

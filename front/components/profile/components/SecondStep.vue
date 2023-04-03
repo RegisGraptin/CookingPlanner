@@ -20,7 +20,8 @@ import ChooseWidget from '../widgets/ChooseWidget.vue';
 
 
 export default {
-    name: "",
+    name: "SecondStepProfileCreation",
+    components: { ChooseWidget },
     props: {
         profile: Object
     },
@@ -72,11 +73,5 @@ export default {
             ],
         }
     },
-    methods: {
-        updateValue(key, value) {
-            this.profile[key] = value;
-        }
-    },
-    components: { ChooseWidget }
 }
 </script>

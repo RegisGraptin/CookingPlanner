@@ -21,19 +21,26 @@
 
             <button @click="previousStep" :disabled="current_step===0" class="inline-flex items-center justify-between w-32 p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 disabled:opacity-25">Previous</button>
 
-            <button @click="nextStep" :disabled="current_step===totalSteps()-1" class="inline-flex items-center justify-between w-32 p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 disabled:opacity-25">Next</button>
+
+
+
+            <button @click="nextStep" v-if="current_step!==totalSteps()-1" :disabled="current_step===totalSteps()-1" class="inline-flex items-center justify-between w-32 p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 disabled:opacity-25">Next</button>
+            
+            <button @click="createProfile" v-else class="inline-flex items-center justify-between w-32 p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 disabled:opacity-25">Create Profile</button>
         </article>
     </section>
 
 </template>
 <script>
 
+import { CookingPlannerAPI } from '~/api/cooking_planner';
+
 import FirstStep from './components/FirstStep.vue';
 import SecondStep from './components/SecondStep.vue';
 import ThirdStep from './components/ThirdStep.vue';
 
 export default {
-    name: "ProfileForm",
+    name: "ProfileCreationForm",
     data() {
         return {
             current_step: 0,
@@ -78,6 +85,27 @@ export default {
         },
         totalSteps() {
             return this.steps.length;
+        },
+        createProfile() {
+            // Create the new profile with the API
+            // Check eventually errors
+            // Redirect the user to the list of profile
+            
+            let created_profile = null;
+
+            let api = new CookingPlannerAPI();
+            api.createNewProfile(this.$axios, this.create_profile)
+                .then((response) => {
+                    this.$log.debug("The profile has been created");
+                    created_profile = response.data;
+                })
+                .catch((error) => {
+                    this.$log.debug("An error occured with the profile creation");
+                    this.$log.error(error);
+                })
+
+            this.$router.push('/generate/profile/');
+
         }
     }
 }

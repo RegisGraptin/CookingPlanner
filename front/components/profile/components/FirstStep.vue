@@ -62,7 +62,7 @@
 import ChooseWidget from '../widgets/ChooseWidget.vue';
 
 export default {
-    name: "",
+    name: "FirstStepProfileCreation",
     components: { ChooseWidget },
     props: {
         profile: Object
