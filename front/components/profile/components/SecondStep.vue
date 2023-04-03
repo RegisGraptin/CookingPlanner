@@ -1,9 +1,8 @@
 <template>
-   <section>
-        
+    <section>
+
         <div v-for="item in items">
-            <h2>{{ item.key }}</h2>
-            <ChooseWidget :key_name="item.key" :variable="profile" :items="item.value" @updateValue="updateValue" />
+            <ChooseWidget :key_name="item.key" :title="item.title" :variable="profile" :items="item.value" @updateValue="updateValue" />
         </div>
 
 
@@ -39,42 +38,46 @@ export default {
                 // },
                 {
                     key: "spicy",
-                    value: [
-                        {name: "Not Spicy", value: 0, icon: ""},
-                        {name: "Soft", value: 1, icon: ""},
-                        {name: "Spicy", value: 2, icon: ""},  
-                    ],
                     profile_variable: this.profile,
+                    title: "Spicy level",
+                    value: [
+                        { name: "Not Spicy", value: 0, icon: "profile/spicy/none.png" },
+                        { name: "Soft", value: 1, icon: "profile/spicy/normal.png" },
+                        { name: "Spicy", value: 2, icon: "profile/spicy/spicy.png" },
+                    ],
                 },
                 {
                     key: "culinary_adventurousness",
-                    value: [
-                        {name: "Not Adventurious", value: 0, icon: ""},
-                        {name: "Normal", value: 1, icon: ""},
-                        {name: "Adventurious", value: 2, icon: ""},
-                    ],
                     profile_variable: this.profile,
+                    title: "Culinary Adventurousness",
+                    value: [
+                        { name: "Not Adventurious", value: 0, icon: "profile/adventurousness/not.png" },
+                        { name: "Normal", value: 1, icon: "profile/adventurousness/normal.png" },
+                        { name: "Adventurious", value: 2, icon: "profile/adventurousness/adventurious.png" },
+                    ],
                 },
                 {
                     key: "recipe_diversity",
-                    value: [
-                        {name: "2/3 recipes", value: 0, icon: ""},
-                        {name: "3/4 recipes", value: 4, icon: ""},
-                        {name: "5+ recipes", value: 7, icon: ""},
-                    ],
                     profile_variable: this.profile,
+                    title: "Recipe diversity",
+                    value: [
+                        { name: "2/3 recipes", value: 0, icon: "profile/recipe_diversity/low.png" },
+                        { name: "3/4 recipes", value: 4, icon: "profile/recipe_diversity/medium.png" },
+                        { name: "5+ recipes", value: 7, icon: "profile/recipe_diversity/high.png" },
+                    ],
                 },
                 {
                     key: "ingredient_diversity",
-                    value: [
-                        {name: "few ingredients", value: 0, icon: ""},
-                        {name: "Normal", value: 1, icon: ""},
-                        {name: "Large amount", value: 2, icon: ""},
-                    ],
                     profile_variable: this.profile,
+                    title: "Ingredient diversity",
+                    value: [
+                        { name: "few ingredients", value: 0, icon: "profile/ingredient_diversity/few.png" },
+                        { name: "Normal", value: 1, icon: "profile/ingredient_diversity/normal.png" },
+                        { name: "Large amount", value: 2, icon: "profile/ingredient_diversity/large.png" },
+                    ],
                 },
 
-            ],            
+            ],
         }
     },
     methods: {

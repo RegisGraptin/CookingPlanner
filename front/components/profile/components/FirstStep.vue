@@ -1,182 +1,107 @@
 <template>
     <section>
-        <h1>Step 1</h1>
+
+        <article class="mt-5">
+            <h2 class="text-center pt-5 mb-5 text-lg font-medium text-gray-900">Number of persons</h2>
+
+            <article class="flex items-center justify-around w-1/2 mx-auto">
+
+                <div style="width: 100px;" class="mr-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth=1.5
+                        stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round"
+                            d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                </div>
+
+                <button @click="removePerson"
+                    class="ml-5 mr-5 w-48 hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+                        class="group-hover:text-blue-500 mb-1 text-slate-400" width="20" height="20" fill="currentColor"
+                        aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
+                    </svg>
+                    Remove Person
+                </button>
 
 
-        <!-- Number of persons -->
-        <h3>Number of persons</h3>
-        <article class="flex items-center justify-around w-1/2 mx-auto">
+                <p class="text-xl mr-5 ml-5">{{ profile.n_persons }}</p>
 
-            <div style="width: 100px;" class="mr-5">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth=1.5
-                    stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round"
-                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                </svg>
-            </div>
+                <button @click="addPerson"
+                    class="ml-5 mr-5 w-48 hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
+                    <svg class="group-hover:text-blue-500 mb-1 text-slate-400" width="20" height="20" fill="currentColor"
+                        aria-hidden="true">
+                        <path
+                            d="M10 5a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V6a1 1 0 0 1 1-1Z" />
+                    </svg>
+                    Add Person
+                </button>
 
-            <button @click="removePerson"
-                class="ml-5 mr-5 w-48 hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
-                
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-                    class="group-hover:text-blue-500 mb-1 text-slate-400" width="20" height="20" fill="currentColor"
-                    aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
-                </svg>
-                Remove Person
-            </button>
+                <div style="width: 100px;" class="ml-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                    </svg>
+                </div>
 
-
-            <p class="text-xl mr-5 ml-5">{{ profile.n_persons }}</p>
-
-            <button @click="addPerson"
-                class="ml-5 mr-5 w-48 hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
-                <svg class="group-hover:text-blue-500 mb-1 text-slate-400" width="20" height="20" fill="currentColor"
-                    aria-hidden="true">
-                    <path
-                        d="M10 5a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V6a1 1 0 0 1 1-1Z" />
-                </svg>
-                Add Person
-            </button>
-
-            <div style="width: 100px;" class="ml-5">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-                </svg>
-            </div>
+            </article>
 
         </article>
 
-        <br /><br /><br />
-
-        <h3 class="mb-5 text-lg font-medium text-gray-900">Cost</h3>
-        <article class="mt-5 flex items-center justify-around w-1/2 mx-auto">
-            <ul class="grid w-full gap-6 md:grid-cols-3">
-                <li>
-                    <input v-model="profile.cost" type="radio" id="budget-small" name="budget" value="0" class="hidden peer" required>
-                    <label for="budget-small" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 ">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">0-50 MB</div>
-                            <div class="w-full">Small budget</div>
-                        </div>
-                        <svg aria-hidden="true" class="w-6 h-6 ml-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </label>
-                </li>
-                <li>
-                    <input v-model="profile.cost" type="radio" id="budget-medium" name="budget" value="3" class="hidden peer">
-                    <label for="budget-medium" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">0-50 MB</div>
-                            <div class="w-full">Medium</div>
-                        </div>
-                        <svg aria-hidden="true" class="w-6 h-6 ml-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </label>
-                </li>
-                <li>
-                    <input v-model="profile.cost" type="radio" id="budget-big" name="budget" value="5" class="hidden peer">
-                    <label for="budget-big" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 ">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">500-1000 MB</div>
-                            <div class="w-full">High budget</div>
-                        </div>
-                        <svg aria-hidden="true" class="w-6 h-6 ml-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </label>
-                </li>
-            </ul>
-        </article>
-
-
-
-        <br /><br /><br />
-
-        <h3 class="mb-5 text-lg font-medium text-gray-900">Cooking Level</h3>
-        <article class="mt-5 flex items-center justify-around w-1/2 mx-auto">
-            <ul class="grid w-full gap-6 md:grid-cols-3">
-                <li>
-                    <input v-model="profile.cooking_level" type="radio" id="cooking-level-beginner" name="cooking-level" value="0" class="hidden peer" required>
-                    <label for="cooking-level-beginner" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 ">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">0-50 MB</div>
-                            <div class="w-full">Beginner</div>
-                        </div>
-                        <svg aria-hidden="true" class="w-6 h-6 ml-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </label>
-                </li>
-                <li>
-                    <input v-model="profile.cooking_level" type="radio" id="cooking-level-medium" name="cooking-level" value="3" class="hidden peer">
-                    <label for="cooking-level-medium" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">0-50 MB</div>
-                            <div class="w-full">Medium</div>
-                        </div>
-                        <svg aria-hidden="true" class="w-6 h-6 ml-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </label>
-                </li>
-                <li>
-                    <input v-model="profile.cooking_level" type="radio" id="cooking-level-expert" name="cooking-level" value="5" class="hidden peer">
-                    <label for="cooking-level-expert" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 ">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">500-1000 MB</div>
-                            <div class="w-full">Expert</div>
-                        </div>
-                        <svg aria-hidden="true" class="w-6 h-6 ml-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </label>
-                </li>
-            </ul>
-        </article>
-
-
-
-        <br /><br /><br />
-
-        <h3 class="mb-5 text-lg font-medium text-gray-900">Time available for cooking</h3>
-        <article class="mt-5 flex items-center justify-around w-1/2 mx-auto">
-            <ul class="grid w-full gap-6 md:grid-cols-3">
-                <li>
-                    <input v-model="profile.cooking_time" type="radio" id="cooking-time-beginner" name="cooking-time" value="0" class="hidden peer" required>
-                    <label for="cooking-time-beginner" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 ">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">0-50 MB</div>
-                            <div class="w-full">Small</div>
-                        </div>
-                        <svg aria-hidden="true" class="w-6 h-6 ml-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </label>
-                </li>
-                <li>
-                    <input v-model="profile.cooking_time" type="radio" id="cooking-time-medium" name="cooking-time" value="3" class="hidden peer">
-                    <label for="cooking-time-medium" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">0-50 MB</div>
-                            <div class="w-full">Medium</div>
-                        </div>
-                        <svg aria-hidden="true" class="w-6 h-6 ml-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </label>
-                </li>
-                <li>
-                    <input v-model="profile.cooking_time" type="radio" id="cooking-time-expert" name="cooking-time" value="5" class="hidden peer">
-                    <label for="cooking-time-expert" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 ">
-                        <div class="block">
-                            <div class="w-full text-lg font-semibold">500-1000 MB</div>
-                            <div class="w-full">High</div>
-                        </div>
-                        <svg aria-hidden="true" class="w-6 h-6 ml-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </label>
-                </li>
-            </ul>
-        </article>
+        <div v-for="item in items">
+            <ChooseWidget :title="item.title" :key_name="item.key" :variable="profile" :items="item.value" @updateValue="updateValue" />
+        </div>
 
 
     </section>
 </template>
 
 <script>
+import ChooseWidget from '../widgets/ChooseWidget.vue';
 
 export default {
     name: "",
+    components: { ChooseWidget },
     props: {
         profile: Object
+    },
+    data() {
+        return {
+            items: [
+                {
+                    key: "cost",
+                    profile_variable: this.profile,
+                    title: "Cost",
+                    value: [
+                        {name: "Small budget" , value: 0, icon: "profile/cost/small.png"},
+                        {name: "Medium", value: 3, icon: "profile/cost/medium.png"},
+                        {name: "High budget"  , value: 5, icon: "profile/cost/high.png"},
+                    ],
+                },
+                {
+                    key: "cooking_level",
+                    profile_variable: this.profile,
+                    title: "Cooking Level",
+                    value: [
+                        {name: "Beginner" , value: 0, icon: "profile/cooking_level/beginner.png"},
+                        {name: "Medium", value: 3, icon: "profile/cooking_level/medium.png"},
+                        {name: "Expert"  , value: 5, icon: "profile/cooking_level/expert.png"},
+                    ],
+                },
+                {
+                    key: "cooking_time",
+                    profile_variable: this.profile,
+                    title: "Time available for cooking",
+                    value: [
+                        {name: "Small" , value: 0, icon: "profile/cooking_time/small.png"},
+                        {name: "Medium", value: 3, icon: "profile/cooking_time/medium.png"},
+                        {name: "High"  , value: 5, icon: "profile/cooking_time/high.png"},
+                    ],
+                }
+            ]
+        }
     },
     methods: {
         addPerson() {
@@ -190,7 +115,7 @@ export default {
             if (this.profile.n_persons > 1) {
                 this.profile.n_persons--;
             }
-        }
+        },
     }
 }
 </script>
