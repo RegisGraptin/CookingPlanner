@@ -51,7 +51,7 @@
         </article>
 
         <div v-for="item in items">
-            <ChooseWidget :title="item.title" :key_name="item.key" :variable="profile" :items="item.value" @updateValue="updateValue" />
+            <ChooseWidget :title="item.title" :key_name="item.key" :variable="profile" :items="item.value" />
         </div>
 
 

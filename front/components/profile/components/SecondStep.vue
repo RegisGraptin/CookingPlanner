@@ -2,7 +2,7 @@
     <section>
 
         <div v-for="item in items">
-            <ChooseWidget :key_name="item.key" :title="item.title" :variable="profile" :items="item.value" @updateValue="updateValue" />
+            <ChooseWidget :key_name="item.key" :title="item.title" :variable="profile" :items="item.value" />
         </div>
 
 
@@ -28,14 +28,6 @@ export default {
         return {
 
             items: [
-                // {
-                //     key: "seasonal_recipe",
-                //     value: [
-                //         {name: "False", value: true, icon: ""},    
-                //         {name: "True", value: false, icon: ""},
-                //     ],
-                //     profile_variable: this.profile.seasonal_recipe,
-                // },
                 {
                     key: "spicy",
                     profile_variable: this.profile,

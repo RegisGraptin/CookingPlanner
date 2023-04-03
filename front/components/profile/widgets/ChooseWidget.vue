@@ -5,7 +5,7 @@
 
         <div class="flex items-center justify-around w-2/3 mx-auto">
 
-            <ul class="grid w-full gap-6 md:grid-cols-3">
+            <ul :class="'grid w-full gap-6 md:grid-cols-' + nb_items">
 
                 <li v-for="(item, index) in items">
 
@@ -44,5 +44,10 @@ export default {
         items: Array,
         title: String,
     },
+    data() {
+        return {
+            nb_items: this.items.length,
+        }
+    }
 }
 </script>
