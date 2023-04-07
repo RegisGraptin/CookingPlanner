@@ -5,7 +5,10 @@
 
         <div class="flex items-center justify-around w-2/3 mx-auto">
 
-            <ul :class="'grid w-full gap-6 md:grid-cols-' + items.length">
+            <ul class="grid w-full gap-6" :class="{
+                'md:grid-cols-2': items.length === 2,
+                'md:grid-cols-3': items.length === 3,
+            }" >
 
                 <li v-for="(item, index) in items">
 

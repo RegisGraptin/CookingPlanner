@@ -82,8 +82,8 @@ class CookingPlannerAPI {
         let response = null;
 
         await axios.post(url, profile)
-            .then((response: any) => {
-                response = response;
+            .then((res: any) => {
+                response = res;
             })
             .catch((error: any) => {
                 throw new Error("An error with the server occurred, please try again.");
