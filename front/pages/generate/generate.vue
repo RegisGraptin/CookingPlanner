@@ -10,8 +10,14 @@ export default {
             generated_week: null,
         }
     },
-    mounted() {
+    props: {
+        profile: Object
+    },
+    created() {
         console.log(this.$route.params);
+        console.log(this.$route.params.profile);
+        console.log(this.profile);
+        console.log(this.generated_week);
     }
 }
 </script>
