@@ -18,7 +18,7 @@
     "nuxt": "^2.15.8",
     "nuxt-logger": "^0.2.0",
     "nuxt-tailvue": "^1.0.95",
-    "postcss": "^8.4.21",
+    "postcss": "^8.4.33",
     "prettier": "^2.8.3",
     "prettier-plugin-tailwindcss": "^0.2.1",
     "tailwindcss": "^3.2.4",
