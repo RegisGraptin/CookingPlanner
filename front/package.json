@@ -14,7 +14,7 @@
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/i18n": "^7.3.0",
     "autoprefixer": "^10.4.13",
-    "core-js": "^3.25.3",
+    "core-js": "^3.35.0",
     "nuxt": "^2.15.8",
     "nuxt-logger": "^0.2.0",
     "nuxt-tailvue": "^1.0.95",
