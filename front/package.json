@@ -20,7 +20,7 @@
     "nuxt-tailvue": "^1.0.95",
     "postcss": "^8.4.21",
     "prettier": "^2.8.3",
-    "prettier-plugin-tailwindcss": "^0.2.1",
+    "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.2.4",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
