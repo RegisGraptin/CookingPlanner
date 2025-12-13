@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.14.2
 
 # Poetry installation : https://stackoverflow.com/questions/53835198/integrating-python-poetry-with-docker
 ENV POETRY_VERSION = 1.3.2
